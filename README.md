@@ -1,8 +1,13 @@
 #Codebase
 
-Place to store your code
+A place to put code
 
 [Screenshots](https://github.com/galen/Codebase#screenshots)
+
+##Requirements
+
+ - PHP 5.4
+ - SQLite with the PDO module loaded ( may switch to SQLite3 library in the future )
 
 ## Features
 

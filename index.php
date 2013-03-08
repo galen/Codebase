@@ -5,7 +5,8 @@ error_reporting( E_ALL );
 
 require( 'system/vendor/autoload.php' );
 
-require( 'system/config.php' );
+require( 'system/config/config.php' );
+
 require( DIR_SYSTEM . '/lib/helpers.php' );
 
 // Every page consumes the API
