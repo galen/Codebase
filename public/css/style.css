@@ -121,7 +121,7 @@ margin-top: 5px;
 .search-form h3 {margin:0 0 15px 0;}
 .search-form .secondary-search {margin-top:15px;}
 .search-form label .instructions { color: #777; font-weight:normal;font-size:12px; float:right;}
-.CodeMirror {height:500px!important; max-width:1280px; width:50%;}
+.CodeMirror {height:500px!important; max-width:1280px; width:80%;}
 
 
 /*Pagination*/

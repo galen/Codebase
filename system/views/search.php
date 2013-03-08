@@ -1,3 +1,7 @@
+<?php if( $code_count == 0 ): ?>
+<p>No code added. <a href="/new/">Add some now</a>.</p>
+<?php else: ?>
+
 <h2 class="title">Search</h2>
 
 <div id="search-wrapper">
@@ -88,3 +92,5 @@
 </div>
 
 </div>
+
+<?php endif; ?>
