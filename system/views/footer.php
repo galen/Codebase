@@ -20,6 +20,42 @@
             });
         </script>
         <script>
+            $.ajaxSetup({
+                cache: true
+            });
+            $( "#language-selector" ).change(function(){
+            language = $(this).val();
+            if ( language == '' ) {
+                editor.setOption( "mode", null );
+                return;
+            }
+            $.ajax({
+                    type: 'GET',
+                    url: '/api/languages/full/',
+                    data: {}
+                }).done( function( data ) {
+                    language_full = data[language];
+                    // Load the mode javascript
+                    $.getScript( '/public/js/codemirror/mode/' + language_full['mode'] + '/' + language_full['mode'] + '.js', function(){});
+                    // Load the modes dependencies
+                    for( i=0; i< language_full['depends'].length; i++ ) {
+                        $.getScript( '/public/js/codemirror/mode/' + language_full['depends'][i] + '/' + language_full['depends'][i] + '.js', function(){
+                            editor.setOption( "mode", language_full['mime'] );
+                        });
+                    }
+                }).fail( function( xhr ) {
+                    data = jQuery.parseJSON( xhr.responseText );
+                    if ( typeof( data.error ) !== undefined ) {
+                        alert( data.error );
+                    }
+                    else {
+                        alert( 'Error retrieving language data' );
+                    }
+                });
+
+            });
+        </script>
+        <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';

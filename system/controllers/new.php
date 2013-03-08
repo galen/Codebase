@@ -1,20 +1,22 @@
 <?php
 
+$view = '/new.php';
+$page = 'new';
+
 if ( $_POST ) {
 
-    $result = $api->post( URL_API . '/new/', $_POST );
-
-    if ( $result->isError() ) {
-        $error = $result->getError();
-        $form_data = (object)$_POST;
-    }
-    else {
+    try {
+        $result = $api->post( URL_API . '/new/', $_POST );
         header( sprintf( "Location: /code/%s/%s/", $result->id, string_to_url( $result->name ) ) );
         exit;
+    }
+    catch( Exception $e ) {
+        $error = $e->getMessage();
+        $view = '/error.php';
     }
 
 }
 
 require( DIR_VIEWS . '/header.php' );
-require( DIR_VIEWS . '/new.php' );
+require( DIR_VIEWS . $view );
 require( DIR_VIEWS . '/footer.php' );

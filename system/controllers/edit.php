@@ -8,15 +8,15 @@ if ( $_POST ) {
     }
     catch( Exception $e ) {
         $error = $e->getMessage();
-        $form_data = (object)$_POST;
+        $code_data = (object)$_POST;
     }
 }
 else {
     try {
         $result = $api->get( URL_API . '/code/' . $id );
-        $form_data = $result->getData();
-        $code = (object)$form_data;
-        $form_data->tags = implode( ', ', (array)$form_data->tags );
+        $code_data = $result->getData();
+        $code = (object)$code_data;
+        $code_data->tags = implode( ', ', (array)$code_data->tags );
     }
     catch( Exception $e ) {
         $error = $e->getMessage();

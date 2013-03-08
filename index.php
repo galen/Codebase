@@ -104,6 +104,10 @@ $app->get('/api/languages/', function() use( $app, $languages ) {
     require( DIR_API . '/languages.php' );
 });
 
+$app->get('/api/languages/full/', function() use( $app, $languages ) {
+    require( DIR_API . '/languages_full.php' );
+});
+
 $app->get('/api/code/:id/', function( $id ) use( $app ) {
     require( DIR_API . '/code.php' );
 });
