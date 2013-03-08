@@ -7,7 +7,7 @@
 <div id="search-wrapper">
 
 <div class="search-form">
-    <h3>Search Code Names</h3>
+    <h3>Search Code Names (<?= $code_count ?>)</h3>
     <form action="" method="get">
         <fieldset>
             <div>
@@ -23,7 +23,7 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Code</h3>
+    <h3>Search Code (<?= $code_count ?>)</h3>
     <form action="" method="get">
         <fieldset>
             <div>
