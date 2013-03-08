@@ -1,0 +1,4 @@
+config.php
+.DS_Store
+system/plugins
+system/database/codebase_me.sqlite3
