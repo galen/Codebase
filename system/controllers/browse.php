@@ -7,6 +7,8 @@ try {
     $pagination = get_pagination( $current_page, $result_count->getData()->count, CODES_PER_PAGE, PAGINATION_VIEWPORT );
     $code = $result->getData();
     $view = '/browse.php';
+    $order_by = isset( $_GET['order_by'] ) ? $_GET['order_by'] : 'name';
+    $order_by_dir = isset( $_GET['order_by'] ) ? $_GET['order_by'] . $_GET['order_dir'] : 'nameasc';
 }
 catch ( Exception $e ) {
     $error = $e->getMessage();

@@ -22,8 +22,10 @@ $search_statement = $database->prepare(
             %s
         like
             :query
+        %s
     ',
-        $_GET['t']
+        $_GET['t'],
+        get_pagination_sql( $_GET )
     )
 );
 

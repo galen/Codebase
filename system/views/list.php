@@ -2,11 +2,11 @@
 
 <table class="code-list">
     <thead>
-        <th>Name</th>
-        <th>Language</th>
+        <th><a href="?<?php if( isset( $results ) ): ?>q=<?= e( $_GET['q'] ) ?>&t=<?= e( $_GET['t'] ) ?>&<?php endif; ?>order_by=name&order_dir=<?php if( $order_by_dir == 'nameasc' ): ?>desc<?php else: ?>asc<?php endif; ?>">Name<?php if( $order_by == 'name' ): ?><i class="foundicon-<?php if( $order_by_dir == 'nameasc' ): ?>up<?php else: ?>down<?php endif; ?>-arrow"></i><?php endif; ?></a></th>
+        <th><a href="?<?php if( isset( $results ) ): ?>q=<?= e( $_GET['q'] ) ?>&t=<?= e( $_GET['t'] ) ?>&<?php endif; ?>order_by=language&order_dir=<?php if( $order_by_dir == 'languageasc' ): ?>desc<?php else: ?>asc<?php endif; ?>">Language<?php if( $order_by == 'language' ): ?><i class="foundicon-<?php if( $order_by_dir == 'languageasc' ): ?>up<?php else: ?>down<?php endif; ?>-arrow"></i><?php endif; ?></a></th>
         <th>Tags</th>
-        <th class="centered">Modified</th>
-        <th class="centered">Created</th>
+        <th class="centered"><a href="?<?php if( isset( $results ) ): ?>q=<?= e( $_GET['q'] ) ?>&t=<?= e( $_GET['t'] ) ?>&<?php endif; ?>order_by=modified&order_dir=<?php if( $order_by_dir == 'modifiedasc' ): ?>desc<?php else: ?>asc<?php endif; ?>">Modified<?php if( $order_by == 'modified' ): ?><i class="foundicon-<?php if( $order_by_dir == 'modifiedasc' ): ?>up<?php else: ?>down<?php endif; ?>-arrow"></i><?php endif; ?></a></th>
+        <th class="centered"><a href="?<?php if( isset( $results ) ): ?>q=<?= e( $_GET['q'] ) ?>&t=<?= e( $_GET['t'] ) ?>&<?php endif; ?>order_by=created&order_dir=<?php if( $order_by_dir == 'createdasc' ): ?>desc<?php else: ?>asc<?php endif; ?>">Name<?php if( $order_by == 'created' ): ?><i class="foundicon-<?php if( $order_by_dir == 'createdasc' ): ?>up<?php else: ?>down<?php endif; ?>-arrow"></i><?php endif; ?></a></th>
         <th class="centered">Actions</th>
     </thead>
     <tbody>
