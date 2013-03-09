@@ -1,8 +1,6 @@
-<?php if( $result_count == 0  ): ?>
-    <p>No code added. <a href="/new/">Add some now</a>.</p>
-<?php elseif( $current_page > $total_pages ): ?>
+<?php if( $current_page > $total_pages ): ?>
     <p>This page does not exist</p>
 <?php else: ?>
-<h2 class="title">Tags: <?= implode( ', ', $tags ) ?></h2>
+<h2 class="title">Tag<?php if( count( $tags ) > 1 ): ?>s<?php endif; ?>: <?= implode( ', ', $tags ) ?> (<?= $tag_code_count ?>)</h2>
 <?php require( DIR_VIEWS . '/list.php' ) ?>
 <?php endif; ?>

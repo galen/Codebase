@@ -1,5 +1,5 @@
 <?php if( isset( $error ) ): ?>
-<?php require( DIR_VIEWS . '/error.php' ) ?>
+<p class="status-message error-message"><?= $error ?></p>
 <?php endif; ?>
 <form action="" method="post">
     <fieldset>
@@ -25,7 +25,7 @@
             <textarea id="code" name="code"><?php if( isset( $code_data->code ) ): ?><?= e( $code_data->code ) ?><?php endif; ?></textarea>
         </div>
         <div>
-            <input type="submit" value="Submit" name="submit">
+            <input type="submit" value=" <?php if( isset( $edit_page ) ): ?>Edit<?php else: ?>Create<?php endif; ?> " name="submit">
         </div>
     </fieldset>
 </form>

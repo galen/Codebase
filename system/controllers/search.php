@@ -25,12 +25,12 @@ try {
     }
     
     if ( isset( $get_data['q'] ) ) {
-        $search_result = $api->get( URL_API . '/search/', $get_data );
-        $search_result_count = $api->get( URL_API . '/search/', array_merge( $get_data, array( 'count' => '1' ) ) )->getData()->count;
-        $code = $search_result->getData();
+        $search_code = $api->get( URL_API . '/search/', $get_data );
+        $search_code_count = $api->get( URL_API . '/search/', array_merge( $get_data, array( 'count' => '1' ) ) )->getData()->count;
+        $code = $search_code->getData();
 
         $current_page = isset( $get_data['page'] ) ? $get_data['page'] : 1;
-        $total_pages = ceil( $search_result_count / CODES_PER_PAGE );
+        $total_pages = ceil( $search_code_count / CODES_PER_PAGE );
         $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
 
         $results = true;

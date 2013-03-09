@@ -101,6 +101,10 @@ form label {display:block;font-weight:bold; font-size:16px;padding-bottom:2px;}
 .CodeMirror {height:500px!important; width:100%}
 .clearfix {overflow:hidden;}
 
+.status-message { font-weight: bold; }
+.error-message { color: #aa0000; }
+.success-message { color: #00aa00; }
+
 #header-wrapper { background:#000; overflow:hidden;}
 #header-wrapper h1 { padding:0;margin:0; float:left; padding: 16px; }
 header a { color:#fff !important; text-decoration:none; }
@@ -153,7 +157,7 @@ margin-top: 5px;
 .current-page { color:#000; font-weight:bold;cursor:default; background: #f6f6f6; }
 .pagination a:hover { background: #ddd; }
 
-.code-list { margin-top:25px; }
+.code-list { margin:25px 0 35px 0; }
 .code-list th {text-align:left;font-size: 16px;padding-top:0 !important;}
 .code-list th a { color:#000; }
 .code-list th a i { font-size: 12px; padding-left: 5px; }

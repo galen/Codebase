@@ -2,7 +2,9 @@
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="/public/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-
+        <script>
+            var url_base = '<?= URL_BASE ?>';
+        </script>
         <script src="/public/js/main.js"></script>
         <script src="/public/js/codemirror/codemirror.js"></script>
         <?php if( isset( $code->language ) ): ?>

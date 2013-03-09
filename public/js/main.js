@@ -17,7 +17,12 @@ $(document).ready(function(){
         }).done( function( data ) {
             deleted = parseInt( data );
             if( deleted === 1 ) {
-                prnt.slideUp();
+                if ( ths.hasClass( 'edit' ) ) {
+                    window.location = url_base;
+                }
+                else {
+                    prnt.closest( 'tr' ).slideUp();
+                }
             }
             else {
                 alert( 'Error deleting the code' );
