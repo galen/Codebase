@@ -5,12 +5,12 @@ $get_data = parse_list_data( $_GET, $default_order );
 
 try {
     $result = $api->get( URL_API . '/browse/', $get_data );
-    $result_count = $api->get( URL_API . '/browse/', array( 'count' => '1' ) );
+    $result_count = $api->get( URL_API . '/browse/', array( 'count' => '1' ) )->getData()->count;
     $code = $result->getData();
 
     $current_page = isset( $get_data['page'] ) ? $get_data['page'] : 1;
-    $pagination = get_pagination( $current_page, $result_count->getData()->count, CODES_PER_PAGE, PAGINATION_VIEWPORT );
-
+    $total_pages = ceil( $result_count / CODES_PER_PAGE );
+    $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
 
     $view = '/index.php';
 }

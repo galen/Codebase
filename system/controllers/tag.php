@@ -4,11 +4,12 @@ $get_data = parse_list_data( $_GET );
 
 try {
     $result = $api->get( URL_API . '/tag/' . urlencode( $tags ), $get_data );
-    $result_count = $api->get( URL_API . '/tag/' . urlencode( $tags ), array( 'count' => '1' ) );
+    $result_count = $api->get( URL_API . '/tag/' . urlencode( $tags ), array( 'count' => '1' ) )->getData()->count;
     $code = $result->getData();
 
     $current_page = isset( $get_data['page'] ) ? $get_data['page'] : 1;
-    $pagination = get_pagination( $current_page, $result_count->getData()->count, CODES_PER_PAGE, PAGINATION_VIEWPORT );
+    $total_pages = ceil( $result_count / CODES_PER_PAGE );
+    $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
 
     $tags = explode( ' ', $tags );
     $view = '/tag.php';

@@ -61,8 +61,7 @@ function get_pagination_sql( array $pagination ) {
 
 }
 
-function get_pagination( $current_page, $total_items, $items_per_page, $pagination_viewport ) {
-    $total_pages = ceil( $total_items / $items_per_page );
+function get_pagination( $current_page, $total_pages, $pagination_viewport ) {
     $start_page = max( $current_page - $pagination_viewport, 1 );
     $end_page = min( $start_page + ( $pagination_viewport * 2 ), $total_pages );
     $start_page = max( $end_page - ( $pagination_viewport * 2 ), 1 );
