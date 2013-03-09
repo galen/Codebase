@@ -92,13 +92,13 @@ fieldset{border:0;padding:0;}
 #code-masthead .title { border-bottom: 1px solid #ccc;padding:10px 0; }
 .code-masthead { border-bottom: 1px solid #ccc; }
 
-h2.title { margin:0 0 8px 0;padding:0;}
+h2.title { margin:0 0 12px 0;padding:0;}
 
 .search-text { border:1px solid #ccc; }
 form label {display:block;font-weight:bold; font-size:16px;padding-bottom:2px;}
 .form-3column{ width: 250px;float:left; margin-bottom: 15px;}
-#code-wrapper {width:60%;clear:left;}
-.CodeMirror {height:500px!important;}
+#code-wrapper {width:100%;clear:left;}
+.CodeMirror {height:500px!important; width:100%}
 .clearfix {overflow:hidden;}
 
 #header-wrapper { background:#000; overflow:hidden;}
