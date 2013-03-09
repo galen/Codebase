@@ -1,4 +1,4 @@
-<h2 class="title">Search Results for "<?= e( $_GET['q'] ) ?>"</h2>
+<h2 class="title">Search Results for <?php if( $get_data['t'] == 'code' ): ?>code containing<?php else: ?>code names containing <?php endif; ?>"<?= e( $get_data['q'] ) ?>"</h2>
 <?php if( count( $code ) === 0 ): ?>
 <p>No results</p>
 <?php else: ?>

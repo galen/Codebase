@@ -21,6 +21,17 @@ function code_tags_to_array( &$code ) {
     }
 }
 
+function parse_list_data( $get, $default_order = null ) {
+    if ( !$default_order ) {
+        $default_order = array( 'order_by' => 'name', 'order_dir' => 'asc' );
+    }
+    $get_data = $get;
+    if ( !isset( $get_data['order_by'], $get_data['order_dir'] ) ) {
+        $get_data = array_merge( $get_data, $default_order );
+    }
+    return $get_data;
+}
+
 function get_pagination_sql( array $pagination ) {
 
     if ( !isset( $pagination['page'] ) ) {
@@ -44,8 +55,8 @@ function get_pagination_sql( array $pagination ) {
         " order by %s collate nocase %s limit %s, %s",
         $pagination['order_by'],
         $pagination['order_dir'],
-        ( $pagination['page'] - 1 ) * CODES_PER_PAGE,
-        isset( $_GET['count'] ) ? -1 : CODES_PER_PAGE
+        isset( $pagination['count'] ) ? 0 : ( $pagination['page'] - 1 ) * CODES_PER_PAGE,
+        isset( $pagination['count'] ) ? -1 : CODES_PER_PAGE
     );
 
 }
