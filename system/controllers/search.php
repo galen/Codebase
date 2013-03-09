@@ -40,11 +40,13 @@ try {
         $langs_result = $api->get( URL_API . '/languages/' );
         $tags_result = $api->get( URL_API . '/tags/' );
         $langs = $langs_result->getData();
+        $langs_count = array_reduce( $langs, function( $c, $l ) { return $c += $l->count; }, 0 );
         $tags = $tags_result->getData();
+        $tags_count = count( $tags );
         $view = '/search.php';
     }
 }
-catch ( Exception $e ) {
+catch ( Excdeption $e ) {
     $error = $e->getMessage();
     $view = '/error.php';
 }

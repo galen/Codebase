@@ -39,7 +39,7 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Tags</h3>
+    <h3>Search Tags (<?= $tags_count ?>)</h3>
     <form action="" method="get">
         <fieldset>
             <div>
@@ -72,7 +72,7 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Languages</h3>
+    <h3>Search Languages (<?= $langs_count ?>)</h3>
     <form action="" method="get">
         <fieldset>
             <div>

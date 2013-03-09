@@ -125,10 +125,10 @@ margin-top: 5px;
 }
 
 #search-wrapper { width: 800px; overflow:hidden; }
-.search-form input[type="text"], .search-form select { width:95%; }
+.search-form input[type="text"], .search-form select { width:280px }
 .search-form { width: 300px; float:left; margin-right: 30px; background-color: #fafafa; padding: 20px; margin-bottom:20px;}
 .search-form h3 {margin:0 0 15px 0;}
-.search-form .secondary-search {margin-top:15px;}
+.search-form .secondary-search {margin-top:20px;}
 .search-form label .instructions { color: #777; font-weight:normal;font-size:12px; float:right;}
 
 
