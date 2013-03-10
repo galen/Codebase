@@ -7,7 +7,7 @@
         </script>
         <script src="/public/js/main.js"></script>
         <script src="/public/js/codemirror/codemirror.js"></script>
-        <?php if( isset( $code->language ) ): ?>
+        <?php if( isset( $code->language, $languages[$code->language]['mode'] ) ): ?>
         <script src="/public/js/codemirror/mode/<?= e( $languages[$code->language]['mode'] ) ?>/<?= e( $languages[$code->language]['mode'] ) ?>.js"></script>
         <?php foreach( $languages[$code->language]['depends'] as $depend ): ?>
         <script src="/public/js/codemirror/mode/<?= $depend ?>/<?= $depend ?>.js"></script>
@@ -18,7 +18,7 @@
                 lineNumbers: true,
                 <?php if( isset( $code->language ) && $code->language == 'markdown' ): ?>lineWrapping: true,<?php endif; ?>
                 <?php if( isset( $code_disabled ) ): ?>readOnly: true,<?php endif; ?>
-                <?php if( isset( $code->language ) ): ?>mode: '<?= e( $languages[$code->language]['mime'] ) ?>'<?php endif; ?>
+                <?php if( isset( $code->language, $languages[$code->language]['mode'] ) ): ?>mode: '<?= e( $languages[$code->language]['mime'] ) ?>'<?php endif; ?>
             });
         </script>
         <script>
@@ -40,8 +40,13 @@
                     // Load the mode javascript
                     $.getScript( '/public/js/codemirror/mode/' + language_full['mode'] + '/' + language_full['mode'] + '.js', function(){});
                     // Load the modes dependencies
+                    if ( !language_full['depends'].length ){
+                        console.log( 'Loading mode:' + language_full['mime'] );
+                        editor.setOption( "mode", language_full['mime'] );
+                    }
                     for( i=0; i< language_full['depends'].length; i++ ) {
                         $.getScript( '/public/js/codemirror/mode/' + language_full['depends'][i] + '/' + language_full['depends'][i] + '.js', function(){
+                            console.log( 'Loading mode:' + language_full['mime'] );
                             editor.setOption( "mode", language_full['mime'] );
                         });
                     }

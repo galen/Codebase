@@ -9,12 +9,13 @@ else {
     $get_data = parse_list_data( $_GET );
 
     try {
-        $result = $api->get( URL_API . '/language/' . $language, $get_data );
-        $result_count = $api->get( URL_API . '/language/' . $language, array( 'count' => '1' ) )->getData()->count;
-        $code = $result->getData();
+
+        $language_code = $api->get( URL_API . '/language/' . urlencode( $language ), $get_data );
+        $language_code_count = $api->get( URL_API . '/language/' . urlencode( $language ), array( 'count' => '1' ) )->getData()->count;
+        $code = $language_code->getData();
 
         $current_page = isset( $get_data['page'] ) ? $get_data['page'] : 1;
-        $total_pages = ceil( $result_count / CODES_PER_PAGE );
+        $total_pages = ceil( $language_code_count / CODES_PER_PAGE );
         $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
 
         $view = '/language.php';

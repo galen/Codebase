@@ -1,4 +1,4 @@
-<h2 class="title">Search</h2>
+<h2 class="title">Search Code</h2>
 
 <div id="search-wrapper">
 
@@ -76,6 +76,7 @@
                 <select name="language">
                 <?php foreach( $langs as $lang ): ?>
                     <?php if( isset( $languages[$lang->language] ) ): ?><option value="<?= e( $lang->language ) ?>"><?= e( $languages[$lang->language]['name'] ) ?> (<?= $lang->count ?>)</option><?php endif; ?>
+
                 <?php endforeach; ?>
                 </select>
             </div>

@@ -7,7 +7,7 @@ if ( $_POST ) {
 
     try {
         $result = $api->post( URL_API . '/new/', $_POST );
-        header( sprintf( "Location: /edit/%s/%s/", $result->id, string_to_url( $result->name ) ) );
+        header( sprintf( "Location: /edit/%s/%s/?new=true", $result->id, string_to_url( $result->name ) ) );
         exit;
     }
     catch( Exception $e ) {
