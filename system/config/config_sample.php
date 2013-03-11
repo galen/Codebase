@@ -19,7 +19,7 @@ define( 'DATABASE',                 DIR_SYSTEM . '/database/codebase.sqlite3' );
 
 define( 'URL_BASE',                 dirname( $_SERVER['SCRIPT_NAME'] ) );
 define( 'URL_API',                  sprintf(
-    'http%s://%s%sapi',
+    'http%s://%s%s/api',
     isset( $_SERVER['HTTPS'] ) && !empty( $_SERVER['HTTPS'] ) ? 's' : '',
     $_SERVER['HTTP_HOST'],
     dirname( $_SERVER['SCRIPT_NAME'] )
