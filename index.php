@@ -18,7 +18,7 @@ require( DIR_SYSTEM . '/lib/Api.php' );
 $api = new Api( $curl );
 
 // Require languages
-require( 'languages.php' );
+require( DIR_SYSTEM . '/config/languages.php' );
 
 // New router with basic http authentication
 $app = new \Slim\Slim();
