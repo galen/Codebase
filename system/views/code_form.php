@@ -22,7 +22,7 @@
         </div>
         <div class="text-preview-wrapper" data-editor="code_editor">
             <div id="code-wrapper">
-                <label for="code">Code<?php if( $page_name == 'edit' && $code_data->language == 'markdown' ): ?><a href="#" class="toggle toggle-preview">Toggle Preview</a><a href="#" class="toggle toggle-split">Toggle Split</a><?php endif; ?></label>
+                <label for="code">Code<a href="#" class="toggle toggle-preview">Toggle Preview</a><a href="#" class="toggle toggle-split">Toggle Split</a></label>
                 <div id="code-editor-preview-wrapper">
                     <textarea id="code" name="code"><?php if( isset( $code_data->code ) ): ?><?= e( $code_data->code ) ?><?php endif; ?></textarea>
                 </div>

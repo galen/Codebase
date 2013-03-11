@@ -1,6 +1,6 @@
 <?php
 
-$edit_page = true;
+$view = '/edit.php';
 
 if ( $_POST ) {
     try {
@@ -26,9 +26,10 @@ try {
 }
 catch( Exception $e ) {
     $error = $e->getMessage();
+    $view = '/error.php';
 }
 
 
 require( DIR_VIEWS . '/header.php' );
-require( DIR_VIEWS . '/edit.php' );
+require( DIR_VIEWS . $view );
 require( DIR_VIEWS . '/footer.php' );

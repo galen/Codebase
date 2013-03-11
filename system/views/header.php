@@ -10,18 +10,17 @@
         <link rel="stylesheet" href="/public/css/codemirror.css">
         <link rel="stylesheet" href="/public/css/elegant.css">
     </head>
-    <body>
+    <body id="<?= $page_name ?>">
 
         <div id="header-wrapper">
             <header>
-                <h1><a href="/">Codebase</a></h1>
+                <h1><a href="<?= URL_BASE ?>">Codebase</a></h1>
                 <ul id="navigation">
-                    <li class="divider"></li>
-                    <li><a href="/new/">New</a></li>
-                    <li><a href="/browse/">Browse</a></li>
+                    <li><a href="/new/"<?php if( $page_name == 'new' ): ?> class="active"<?php endif; ?>>New</a></li>
+                    <li><a href="/browse/"<?php if( $page_name == 'browse' ): ?> class="active"<?php endif; ?>>Browse</a></li>
                     <!--<li><a href="/languages/">Languages</a></li>
                     <li><a href="/tags/">Tags</a></li>-->
-                    <li><a href="/search/">Search</a></li>
+                    <li><a href="/search/"<?php if( $page_name == 'search' ): ?> class="active"<?php endif; ?>>Search</a></li>
                 </ul>
             </header>
         </div>

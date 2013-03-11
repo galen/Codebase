@@ -11,6 +11,7 @@
         <script src="/public/js/codemirror/mode/<?= $depend ?>/<?= $depend ?>.js"></script>
         <?php endforeach; ?>
         <?php endif; ?>
+
         <script>
             var code_editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                 lineNumbers: true,
@@ -71,6 +72,11 @@
                 $( '.toggle' ).show();
             }
 
+            $( document ).ready(function(){
+            <?php if( isset( $code_data->language ) && $code_data->language != 'markdown' || !isset( $code_data ) ): ?>
+                hide_markdown();
+            <?php endif; ?>
+            });
         </script>
         <script>
             $.ajaxSetup({
