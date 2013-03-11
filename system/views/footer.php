@@ -1,14 +1,14 @@
 
         </div>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/public/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="/public/js/main.js"></script>
-        <script src="/public/js/vendor/showdown.js"></script>
-        <script src="/public/js/codemirror/codemirror.js"></script>
+        <script>window.jQuery || document.write('<script src="<?= URL_BASE ?>/public/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script src="<?= URL_BASE ?>/public/js/main.js"></script>
+        <script src="<?= URL_BASE ?>/public/js/vendor/showdown.js"></script>
+        <script src="<?= URL_BASE ?>/public/js/codemirror/codemirror.js"></script>
         <?php if( isset( $code->language, $languages[$code->language]['mode'] ) ): ?>
-        <script src="/public/js/codemirror/mode/<?= e( $languages[$code->language]['mode'] ) ?>/<?= e( $languages[$code->language]['mode'] ) ?>.js"></script>
+        <script src="<?= URL_BASE ?>/public/js/codemirror/mode/<?= e( $languages[$code->language]['mode'] ) ?>/<?= e( $languages[$code->language]['mode'] ) ?>.js"></script>
         <?php foreach( $languages[$code->language]['depends'] as $depend ): ?>
-        <script src="/public/js/codemirror/mode/<?= $depend ?>/<?= $depend ?>.js"></script>
+        <script src="<?= URL_BASE ?>/public/js/codemirror/mode/<?= $depend ?>/<?= $depend ?>.js"></script>
         <?php endforeach; ?>
         <?php endif; ?>
 
@@ -73,8 +73,8 @@
             }
 
             $( document ).ready(function(){
-            <?php if( isset( $code_data->language ) && $code_data->language != 'markdown' || !isset( $code_data ) ): ?>
-                hide_markdown();
+            <?php if( isset( $code->language ) && $code->language == 'markdown' ): ?>
+                show_markdown();
             <?php endif; ?>
             });
         </script>
@@ -90,7 +90,7 @@
             }
             $.ajax({
                     type: 'GET',
-                    url: '/api/languages/full/',
+                    url: '<?= URL_API ?>/languages/full/',
                     data: {}
                 }).done( function( data ) {
                     language_full = data[language];
@@ -102,14 +102,14 @@
                         hide_markdown();
                     }
                     // Load the mode javascript
-                    $.getScript( '/public/js/codemirror/mode/' + language_full['mode'] + '/' + language_full['mode'] + '.js', function(){});
+                    $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['mode'] + '/' + language_full['mode'] + '.js', function(){});
                     // Load the modes dependencies
                     if ( !language_full['depends'].length ){
                         console.log( 'Loading mode:' + language_full['mime'] );
                         code_editor.setOption( "mode", language_full['mime'] );
                     }
                     for( i=0; i< language_full['depends'].length; i++ ) {
-                        $.getScript( '/public/js/codemirror/mode/' + language_full['depends'][i] + '/' + language_full['depends'][i] + '.js', function(){
+                        $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['depends'][i] + '/' + language_full['depends'][i] + '.js', function(){
                             console.log( 'Loading mode:' + language_full['mime'] );
                             code_editor.setOption( "mode", language_full['mime'] );
                         });

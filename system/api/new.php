@@ -3,7 +3,7 @@
 require( 'api.php' );
 
 $data = array_intersect_key(
-    array_map( 'trim', $_POST ),
+    array_map( 'trim', $_GET ),
     array_flip( array( 'name', 'tags', 'code', 'language' ) )
 );
 
@@ -21,12 +21,12 @@ $code_statement->bindValue( ':language', $data['language'] ? $data['language'] :
 try {
     $code_statement->execute();
 } catch( PDOException $e ) {
+print_r($e);
     $database->rollback();
     error( 500, 'Server Error' );
     exit;
 }
 $code_id = $database->lastInsertId();
-
 
 // No tags
 if ( !$data['tags'] ) {

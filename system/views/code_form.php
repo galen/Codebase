@@ -1,7 +1,7 @@
 <?php if( isset( $error ) ): ?>
 <p class="status-message error-message"><?= $error ?></p>
 <?php endif; ?>
-<form action="<?= $app->request()->getResourceUri() ?>" method="post">
+<form action="<?= $app->request()->getRootUri() ?><?= $app->request()->getResourceUri() ?>" method="post">
     <fieldset>
         <div class="form-3column">
             <label for="name">Name</label>
@@ -31,7 +31,7 @@
         </div>
         <div>
             <input type="hidden" name="name_old" value="<?php if( isset( $code_data ) ): ?><?= e( $code_data->name ) ?><?php endif; ?>">
-            <input type="submit" value=" <?php if( isset( $edit_page ) ): ?>Save<?php else: ?>Create<?php endif; ?> " name="submit">
+            <input type="submit" value=" <?php if( $page_name == 'edit' ): ?>Save<?php else: ?>Create<?php endif; ?> " name="submit">
         </div>
     </fieldset>
 </form>

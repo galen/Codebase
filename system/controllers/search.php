@@ -9,16 +9,16 @@ try {
     if ( isset(  $get_data['t']) ) {
         switch( $get_data['t'] ) {
             case 'tag':
-                header( 'Location: /tag/' . $get_data['tag'] );
+                header( sprintf( 'Location: %s/tag/%s', URL_BASE, $get_data['tag'] ) );
                 exit;
             break;
             case 'tags':
                 $tags = preg_replace( '~\s*,\s*~', ' ', $get_data['q'] );
-                header( 'Location: /tag/' . urlencode( $tags ) );
+                header( sprintf( 'Location: %s/tag/%s', URL_BASE, urlencode( $tags ) ) );
                 exit;
             break;
             case 'language':
-                header( 'Location: /language/' . $get_data['language'] );
+                header( sprintf( 'Location: %s/language/%s', URL_BASE, $get_data['language'] ) );
                 exit;
             break;
         }

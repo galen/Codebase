@@ -6,7 +6,7 @@ if ( $_POST ) {
     try {
         $result = $api->post( URL_API . '/edit/' . $id, $_POST );
         if ( $_POST['name'] != $_POST['name_old'] ) {
-            header( sprintf( "Location: /edit/%s/%s/?edit=true", $result->id, string_to_url( $result->name ) ) );
+            header( sprintf( "Location: %s/edit/%s/%s/?edit=true", URL_BASE, $result->id, string_to_url( $result->name ) ) );
             exit;
         }
         $edit_success = true;

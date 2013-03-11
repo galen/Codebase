@@ -14,9 +14,11 @@ require( DIR_SYSTEM . '/lib/Curl.php' );
 $curl = new Curl;
 $curl->setOption( CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
 $curl->setOption( CURLOPT_USERPWD, sprintf( "%s:%s", USERNAME, PASSWORD ) );
-
 require( DIR_SYSTEM . '/lib/Api.php' );
 $api = new Api( $curl );
+
+// Require languages
+require( 'languages.php' );
 
 // New router with basic http authentication
 $app = new \Slim\Slim();
@@ -80,7 +82,7 @@ $app->post('/api/edit/:id/', function( $id ) use( $app, $languages ) {
     require( DIR_API . '/edit.php' );
 });
 
-$app->post('/api/new/', function() use( $app, $languages ) {
+$app->get('/api/new/', function() use( $app, $languages ) {
     require( DIR_API . '/new.php' );
 });
 

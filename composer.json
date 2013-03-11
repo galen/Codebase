@@ -1,6 +1,9 @@
 {
     "require": {
         "slim/slim": "2.*",
-        "slim/extras": "dev-master",
-    }
+        "slim/extras": "dev-master"
+    },
+    "config": {
+	    "vendor-dir": "./system/vendor"
+	}
 }
