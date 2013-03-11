@@ -5,7 +5,6 @@ $view = '/new.php';
 if ( $_POST ) {
 
     try {
-    echo URL_API . '/new/', $_POST;
         $result = $api->post( URL_API . '/new/', $_POST );
         header( sprintf( "Location: %s/edit/%s/%s/?new=true", URL_BASE, $result->id, string_to_url( $result->name ) ) );
         exit;

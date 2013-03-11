@@ -3,15 +3,22 @@
 $get_data = parse_list_data( $_GET );
 
 try {
-    $browse_code = $api->get( URL_API . '/browse/', $get_data );
-    $browse_code_count = $api->get( URL_API . '/browse/', array( 'count' => '1' ) )->getData()->count;
-    $code = $browse_code->getData();
 
-    $current_page = isset( $get_data['page'] ) ? $get_data['page'] : 1;
-    $total_pages = ceil( $browse_code_count / CODES_PER_PAGE );
-    $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
+    $code_count = $api->get( URL_API . '/count/' )->getData()->count;
+    if ( $code_count == '0' ) {
+        $view = '/add_code.php';
+    }
+    else {
+        $browse_code = $api->get( URL_API . '/browse/', $get_data );
+        $browse_code_count = $api->get( URL_API . '/browse/', array( 'count' => '1' ) )->getData()->count;
+        $code = $browse_code->getData();
 
-    $view = '/browse.php';
+        $current_page = isset( $get_data['page'] ) ? $get_data['page'] : 1;
+        $total_pages = ceil( $browse_code_count / CODES_PER_PAGE );
+        $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
+
+        $view = '/browse.php';
+    }
 }
 catch ( Exception $e ) {
     $error = $e->getMessage();

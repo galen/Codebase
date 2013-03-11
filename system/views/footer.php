@@ -24,17 +24,17 @@
             });
         </script>
         <script>
-            var url_base = '<?= URL_BASE ?>';
+            var url_base = '<?= URL_BASE ?>' ? '<?= URL_BASE ?>' : '/';
             var showdown = new Showdown.converter();
 
             $('.delete-code').click(function(){
                 ths = $(this);
                 prnt = ths.closest( 'ul' );
-                if ( prnt.data( 'locked' ) == 1 ) {
+                if ( prnt.hasClass( 'locked' ) == 1 ) {
                     alert( 'This code is locked. You can\'t delete it.' );
                     return false;
                 }
-                if ( !confirm( "Do you want to delete code '"+ ths.data('code-name') + "'" ) ) {
+                if ( !confirm( "Do you want to delete code '"+ prnt.data('name') + "'" ) ) {
                     return false;
                 }
                 $.ajax({
@@ -67,7 +67,6 @@
             });
 
             $('.star-code, .lock-code').click(function(){
-                alert('asdf');
                 ths = $(this);
                 prnt = ths.closest( 'ul' );
                 if ( ths.hasClass( 'star-code' ) ) {
@@ -77,22 +76,19 @@
                 }
                 else {
                     password = prompt( 'Enter the lock password' );
-                    if ( password === null || password === '' ) {
-                        return false;
-                    }
                     active_class = 'locked';
                     endpoint = 'lock';
                     verb = 'locking';
                 }
                 $.ajax({
                     type: 'POST',
-                    url: '<?= URL_API ?>/' + ( ths.hasClass( active_class ) ? 'un' : '' ) + endpoint + "/" + prnt.data( 'id' ),
+                    url: '<?= URL_API ?>/' + ( prnt.hasClass( active_class ) ? 'un' : '' ) + endpoint + "/" + prnt.data( 'id' ),
                     data: endpoint === 'lock' ? {password: password} : {}
                 }).done( function( data ) {
                     console.log(data);
                         result = parseInt( data );
                         if( result === 1 ) {
-                            ths.toggleClass( active_class );
+                            prnt.toggleClass( active_class );
                         }
                         else {
                             alert( 'Error ' + verb + ' the code' );

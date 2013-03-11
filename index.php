@@ -9,20 +9,24 @@ require( 'system/config/config.php' );
 
 require( DIR_SYSTEM . '/lib/helpers.php' );
 
+$app = new \Slim\Slim();
+
 // Every page consumes the API
 require( DIR_SYSTEM . '/lib/Curl.php' );
-$curl = new Curl;
-$curl->setOption( CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
-$curl->setOption( CURLOPT_USERPWD, sprintf( "%s:%s", USERNAME, PASSWORD ) );
 require( DIR_SYSTEM . '/lib/Api.php' );
+
+$curl = new Curl;
+
+if ( USERNAME !== '' && PASSWORD !== '' ) {
+    $app->add( new \Slim\Extras\Middleware\HttpBasicAuth( USERNAME, PASSWORD ) );
+    $curl->setOption( CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
+    $curl->setOption( CURLOPT_USERPWD, sprintf( "%s:%s", USERNAME, PASSWORD ) );
+}
+
 $api = new Api( $curl );
 
 // Require languages
 require( DIR_SYSTEM . '/config/languages.php' );
-
-// New router with basic http authentication
-$app = new \Slim\Slim();
-$app->add( new \Slim\Extras\Middleware\HttpBasicAuth( USERNAME, PASSWORD ) );
 
 $app->get('/', function() use( $app, $api, $languages ) {
     $page_name = 'index';
@@ -78,11 +82,15 @@ $app->get( '/code/:id/(:name/)', function( $id, $name = null ) use( $app, $api, 
 
 
 // API calls
+$app->get('/api/count/', function() use( $app, $languages ) {
+    require( DIR_API . '/count.php' );
+});
+
 $app->post('/api/edit/:id/', function( $id ) use( $app, $languages ) {
     require( DIR_API . '/edit.php' );
 });
 
-$app->get('/api/new/', function() use( $app, $languages ) {
+$app->post('/api/new/', function() use( $app, $languages ) {
     require( DIR_API . '/new.php' );
 });
 

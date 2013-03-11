@@ -84,10 +84,10 @@ fieldset{border:0;padding:0;}
 .code-actions.large { float:left; margin-right: 10px; }
 .code-actions.large a { font-size: 20px; line-height: 38px;padding: 0 1px; margin: 0 1px; }
 .code-actions a:hover { color:#aa0000 }
-.code-actions .starred .foundicon-star { color:#f7df04; }
-.code-actions .starred:hover .foundicon-star { color:#c8b300; }
-.code-actions .locked .foundicon-lock { color:#05b417; }
-.code-actions .locked:hover .foundicon-lock { color:#368a2c; }
+.starred .foundicon-star { color:#f7df04; }
+.starred:hover .foundicon-star { color:#c8b300; }
+.locked .foundicon-lock { color:#05b417; }
+.locked:hover .foundicon-lock { color:#368a2c; }
 .code-actions a:hover { text-decoration:none; }
 
 #code-masthead .title { border-bottom: 1px solid #ccc;padding:10px 0; }

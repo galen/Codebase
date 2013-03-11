@@ -26,7 +26,7 @@
 
         <div id="header-wrapper">
             <header>
-                <h1><a href="<?= URL_BASE ?>">Codebase</a></h1>
+                <h1><a href="<?= URL_BASE ? URL_BASE : '/' ?>">Codebase</a></h1>
                 <ul id="navigation">
                     <li><a href="<?= URL_BASE ?>/new/"<?php if( $page_name == 'new' ): ?> class="active"<?php endif; ?>>New</a></li>
                     <li><a href="<?= URL_BASE ?>/browse/"<?php if( $page_name == 'browse' ): ?> class="active"<?php endif; ?>>Browse</a></li>

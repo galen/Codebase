@@ -3,7 +3,7 @@
 require( 'api.php' );
 
 $data = array_intersect_key(
-    array_map( 'trim', $_GET ),
+    array_map( 'trim', $_POST ),
     array_flip( array( 'name', 'tags', 'code', 'language' ) )
 );
 

@@ -4,3 +4,5 @@ system/plugins
 system/database/codebase_me.sqlite3
 system/database/codebase_clean_code.sqlite3
 .idea
+composer.lock
+system/vendor/*
