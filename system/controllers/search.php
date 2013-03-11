@@ -33,7 +33,6 @@ try {
         $total_pages = ceil( $search_code_count / CODES_PER_PAGE );
         $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
 
-        $results = true;
         $view = '/search_results.php';
     }
     else {
@@ -46,7 +45,7 @@ try {
         $view = '/search.php';
     }
 }
-catch ( Excdeption $e ) {
+catch ( Exception $e ) {
     $error = $e->getMessage();
     $view = '/error.php';
 }

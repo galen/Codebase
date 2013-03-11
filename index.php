@@ -23,45 +23,57 @@ $app = new \Slim\Slim();
 $app->add( new \Slim\Extras\Middleware\HttpBasicAuth( USERNAME, PASSWORD ) );
 
 $app->get('/', function() use( $app, $api, $languages ) {
+    $page_name = 'index';
     require( DIR_CONTROLLERS . '/index.php' );
 });
 
 $app->map('/new/', function() use( $app, $api, $languages ) {
+    $page_name = 'new';
     require( DIR_CONTROLLERS . '/new.php' );
 })->via( 'GET', 'POST' );
 
 $app->get('/browse/', function() use( $app, $api, $languages ) {
+    $page_name = 'browse';
     require( DIR_CONTROLLERS . '/browse.php' );
 });
 
 $app->get('/tags/', function() use( $app, $api, $languages ) {
+    $page_name = 'tags';
     require( DIR_CONTROLLERS . '/tags.php' );
 });
 
 $app->get('/tag/:tags/', function( $tags ) use( $app, $api, $languages ) {
+    $page_name = 'tag';
     require( DIR_CONTROLLERS . '/tag.php' );
 });
 
 $app->get('/language/:language/', function( $language ) use( $app, $api, $languages ) {
+    $page_name = 'language';
     require( DIR_CONTROLLERS . '/language.php' );
 });
 
 $app->get('/languages/', function() use( $app, $api, $languages ) {
+    $page_name = 'languages';
     require( DIR_CONTROLLERS . '/languages.php' );
 });
 
 $app->get('/search/', function() use( $app, $api, $languages ) {
+    $page_name = 'search';
     require( DIR_CONTROLLERS . '/search.php' );
 });
 
 $app->map( '/edit/:id/(:name/)', function( $id, $name = null ) use( $app, $api, $languages ){
+    $page_name = 'edit';
     require( DIR_CONTROLLERS . '/edit.php' );
 })->via( 'GET', 'POST' );
 
+/*
 $app->get( '/code/:id/(:name/)', function( $id, $name = null ) use( $app, $api, $languages ){
-    $code_disabled = true;
+    $page_name = 'code';
     require( DIR_CONTROLLERS . '/code.php' );
 });
+*/
+
 
 // API calls
 $app->post('/api/edit/:id/', function( $id ) use( $app, $languages ) {

@@ -26,4 +26,4 @@
             </header>
         </div>
 
-        <div id="content">
+        <div id="content"<?php if( CODE_EDITOR_MAX_WIDTH ): ?> style="max-width:<?= CODE_EDITOR_MAX_WIDTH ?>"<?php endif; ?>>
