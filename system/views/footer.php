@@ -75,7 +75,7 @@
                     verb = 'starring';
                 }
                 else {
-                    password = prompt( 'Enter the lock password' );
+                    password = <?php if( CODE_LOCK_PASSWORD != '' ): ?>prompt( 'Enter the lock password' )<?php else: ?>''<?php endif; ?>;
                     active_class = 'locked';
                     endpoint = 'lock';
                     verb = 'locking';
@@ -134,11 +134,17 @@
                 update_preview( 'code_editor', $( '#code-preview' ) );
             });
             $( '.toggle-split').click(function(){
-                editor = $( this ).parent().parent().parent().data( 'editor' );
+                prnt = $( this ).parent().parent().parent();
+                editor = prnt.data( 'editor' );
                 preview = $( this ).parent().parent().next();
                 update_preview( editor, preview );
-                $( this ).parent().parent().next().show();
-                $( this ).parent().parent().parent().toggleClass( 'split' );
+                if ( prnt.hasClass( 'split' ) ) {
+                    preview.hide();
+                }
+                else {
+                    preview.show();
+                }
+                prnt.toggleClass( 'split' );
                 return false;
             });
 
