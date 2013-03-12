@@ -13,19 +13,25 @@
         <?php endif; ?>
 
         <script>
+            var url_base = '<?= URL_BASE ?>' ? '<?= URL_BASE ?>' : '/';
+            var showdown = new Showdown.converter();
+
             var code_editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                 lineNumbers: true,
                 <?php if( isset( $code->language ) && $code->language == 'markdown' ): ?>lineWrapping: true,<?php endif; ?>
                 <?php if( isset( $code_disabled ) ): ?>readOnly: true,<?php endif; ?>
                 <?php if( isset( $code->language, $languages[$code->language]['mode'] ) ): ?>mode: '<?= e( $languages[$code->language]['mime'] ) ?>'<?php endif; ?>
             });
+
             code_editor.on( 'scroll', function(){
                 $( '#code-preview' ).scrollTop( code_editor.getScrollInfo().top );
             });
-        </script>
-        <script>
-            var url_base = '<?= URL_BASE ?>' ? '<?= URL_BASE ?>' : '/';
-            var showdown = new Showdown.converter();
+
+            $( '.preview-container' ).scroll(function(){;
+                var length = $(this).scrollTop();
+                editor = $( this ).parent().data( 'editor' );
+                window[editor].scrollTo( 0, length );
+            });
 
             $('.delete-code').click(function(){
                 ths = $(this);
@@ -106,79 +112,23 @@
                 return false;
             });
 
-
-            $( '.toggle-preview' ).click(function(){
-                if ( $( this ).parent().parent().parent().hasClass( 'split' ) ) {
-                    $( this).next().trigger( 'click' );
-                }
-                else {
-                    editor = $( this ).parent().parent().parent().data( 'editor' );
-                    preview = $( this ).parent().parent().next();
-                    update_preview( editor, preview );
-                }
-                $( this ).parent().parent().next().toggle();
-                return false;
-            });
-
-            $( '.preview-container' ).scroll(function(){;
-                var length = $(this).scrollTop();
-                $( this ).parent().data( 'editor' );
-                window[editor].scrollTo( 0, length );
-            });
-
-            function update_preview( editor, preview ) {
-                var html = showdown.makeHtml( window[editor].getValue() );
-                preview.html( html );
-            }
-            code_editor.on( 'change', function(){
-                update_preview( 'code_editor', $( '#code-preview' ) );
-            });
-            $( '.toggle-split').click(function(){
-                prnt = $( this ).parent().parent().parent();
-                editor = prnt.data( 'editor' );
-                preview = $( this ).parent().parent().next();
-                update_preview( editor, preview );
-                if ( prnt.hasClass( 'split' ) ) {
-                    preview.hide();
-                }
-                else {
-                    preview.show();
-                }
-                prnt.toggleClass( 'split' );
-                return false;
-            });
-
-            function hide_markdown() {
-                $( '.toggle').hide();
-                $( '.text-preview-wrapper' ).removeClass( 'split' );
-                $( '.preview-container' ).hide();
-            }
-
-            function show_markdown() {
-                $( '.toggle' ).show();
-            }
-
-            $( document ).ready(function(){
-            <?php if( isset( $code->language ) && $code->language == 'markdown' ): ?>
-                show_markdown();
-            <?php endif; ?>              
-            });
-        </script>
-        <script>
             $.ajaxSetup({
                 cache: true
             });
+
+            // Language selector mode switching
             $( "#language-selector" ).change(function(){
-            language = $(this).val();
-            if ( language == '' ) {
-                code_editor.setOption( "mode", null );
-                return;
-            }
-            $.ajax({
+                language = $(this).val();
+                if ( language == '' ) {
+                    code_editor.setOption( "mode", null );
+                    return;
+                }
+                $.ajax({
                     type: 'GET',
                     url: '<?= URL_API ?>/languages/full/',
                     data: {}
-                }).done( function( data ) {
+                })
+                .done( function( data ) {
                     language_full = data[language];
 
                     if ( language_full['mode'] == 'markdown' ) {
@@ -191,12 +141,10 @@
                     $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['mode'] + '/' + language_full['mode'] + '.js', function(){});
                     // Load the modes dependencies
                     if ( !language_full['depends'].length ){
-                        console.log( 'Loading mode:' + language_full['mime'] );
                         code_editor.setOption( "mode", language_full['mime'] );
                     }
                     for( i=0; i< language_full['depends'].length; i++ ) {
                         $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['depends'][i] + '/' + language_full['depends'][i] + '.js', function(){
-                            console.log( 'Loading mode:' + language_full['mime'] );
                             code_editor.setOption( "mode", language_full['mime'] );
                         });
                     }
@@ -209,8 +157,58 @@
                         alert( 'Error retrieving language data' );
                     }
                 });
-
             });
+
+            // Markdown preview stuff
+            $( '.toggle-preview' ).click(function(){
+                prnt = $( this ).parent().parent().parent();
+                preview = $( this ).parent().parent().next();
+                if ( prnt.hasClass( 'split' ) ) {
+                    $( this).next().trigger( 'click' );
+                }
+                else {
+                    update_preview( prnt.data( 'editor' ), preview );
+                }
+                preview.toggle();
+                return false;
+            });
+
+            function update_preview( editor, preview ) {
+                var html = showdown.makeHtml( window[editor].getValue() );
+                preview.html( html );
+            }
+
+            code_editor.on( 'change', function(){
+                update_preview( 'code_editor', $( '#code-preview' ) );
+            });
+
+            $( '.toggle-split').click(function(){
+                prnt = $( this ).parent().parent().parent();
+                preview = $( this ).parent().parent().next();
+                update_preview( prnt.data( 'editor' ), preview );
+                if ( prnt.hasClass( 'split' ) ) {
+                    preview.hide();
+                }
+                else {
+                    preview.show();
+                }
+                prnt.toggleClass( 'split' );
+                return false;
+            });
+
+            function hide_preview() {
+                $( '.toggle').hide();
+                $( '.text-preview-wrapper' ).removeClass( 'split' );
+                $( '.preview-container' ).hide();
+            }
+
+            function show_preview() {
+                $( '.toggle' ).show();
+            }
+
+            <?php if( isset( $code->language ) && $code->language == 'markdown' ): ?>
+            show_preview();
+            <?php endif; ?>
         </script>
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
