@@ -3,7 +3,7 @@
 <div id="search-wrapper">
 
 <div class="search-form">
-    <h3>Search Code Names (<?= $code_count ?>)</h3>
+    <h3>Search Code Names <span class="code-count">(<?= $code_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>
@@ -19,7 +19,7 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Code (<?= $code_count ?>)</h3>
+    <h3>Search Code <span class="code-count">(<?= $code_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>
@@ -35,7 +35,7 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Tags (<?= $tags_count ?>)</h3>
+    <h3>Search Tags <span class="code-count">(<?= $tags_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>
@@ -69,7 +69,7 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Languages (<?= $langs_count ?>)</h3>
+    <h3>Search Languages <span class="code-count">(<?= $langs_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>

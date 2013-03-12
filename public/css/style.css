@@ -178,3 +178,5 @@ margin-top: 5px;
 .code-list td:first-child{border-left: 1px solid #ccc;}
 .code-list td:last-child{border-right: 1px solid #ccc;}
 .code-list .centered {text-align:center;}
+
+.code-count { font-size: 16px; color: #888 }
