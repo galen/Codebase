@@ -41,6 +41,7 @@
             <div>
                 <label for="">Select Tag</label>
                 <select name="tag">
+                    <option value=""></option>
                 <?php foreach( $tags as $tag ): ?>
                     <option value="<?= e( $tag->tag ) ?>"><?= e( $tag->tag ) ?> (<?= $tag->count ?>)</option>
                 <?php endforeach; ?>
@@ -74,6 +75,7 @@
             <div>
                 <label for="">Select Language</label>
                 <select name="language">
+                    <option value=""></option>
                 <?php foreach( $langs as $lang ): ?>
                     <?php if( isset( $languages[$lang->language] ) ): ?><option value="<?= e( $lang->language ) ?>"><?= e( $languages[$lang->language]['name'] ) ?> (<?= $lang->count ?>)</option><?php endif; ?>
 
