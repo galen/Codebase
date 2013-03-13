@@ -1,6 +1,6 @@
 
         </div>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script>
         <script>window.jQuery || document.write('<script src="<?= URL_BASE ?>/public/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
         <script src="<?= URL_BASE ?>/public/js/main.js"></script>
         <script src="<?= URL_BASE ?>/public/js/vendor/showdown.js"></script>
@@ -13,10 +13,15 @@
         <?php endif; ?>
 
         <script>
+            $.ajaxSetup({
+                cache: true
+            });
             var url_base = '<?= URL_BASE ?>' ? '<?= URL_BASE ?>' : '/';
-            var showdown = new Showdown.converter();
 
-            var code_editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            <?php if( $page_name == 'edit' || $page_name == 'new' ): ?>
+
+            var showdown = new Showdown.converter();
+            var code_editor = CodeMirror.fromTextArea(document.getElementById( 'code' ), {
                 lineNumbers: true,
                 <?php if( isset( $code->language ) && $code->language == 'markdown' ): ?>lineWrapping: true,<?php endif; ?>
                 <?php if( isset( $code_disabled ) ): ?>readOnly: true,<?php endif; ?>
@@ -25,138 +30,6 @@
 
             code_editor.on( 'scroll', function(){
                 $( '#code-preview' ).scrollTop( code_editor.getScrollInfo().top );
-            });
-
-            $( '.preview-container' ).scroll(function(){;
-                var length = $(this).scrollTop();
-                editor = $( this ).parent().data( 'editor' );
-                window[editor].scrollTo( 0, length );
-            });
-
-            $('.delete-code').click(function(){
-                ths = $(this);
-                prnt = ths.closest( 'ul' );
-                if ( prnt.hasClass( 'locked' ) == 1 ) {
-                    alert( 'This code is locked. You can\'t delete it.' );
-                    return false;
-                }
-                if ( !confirm( "Do you want to delete code '"+ prnt.data('name') + "'" ) ) {
-                    return false;
-                }
-                $.ajax({
-                    type: 'DELETE',
-                    url: '<?= URL_API ?>/delete/' + prnt.data( 'id' ),
-                    data: {}
-                }).done( function( data ) {
-                    deleted = parseInt( data );
-                    if( deleted === 1 ) {
-                        if ( ths.hasClass( 'edit' ) ) {
-                            window.location = url_base;
-                        }
-                        else {
-                            prnt.closest( 'tr' ).slideUp();
-                        }
-                    }
-                    else {
-                        alert( 'Error deleting the code' );
-                    }
-                }).fail( function( xhr ) {
-                    data = jQuery.parseJSON( xhr.responseText );
-                    if ( typeof( data.error ) !== undefined ) {
-                        alert( data.error );
-                    }
-                    else {
-                        alert( 'Error deleting the code' );
-                    }
-                });
-                return false;
-            });
-
-            $('.star-code, .lock-code').click(function(){
-                ths = $(this);
-                prnt = ths.closest( 'ul' );
-                if ( ths.hasClass( 'star-code' ) ) {
-                    active_class = 'starred';
-                    endpoint = 'star';
-                    verb = 'starring';
-                }
-                else {
-                    password = <?php if( CODE_LOCK_PASSWORD != '' ): ?>prompt( 'Enter the lock password' )<?php else: ?>''<?php endif; ?>;
-                    active_class = 'locked';
-                    endpoint = 'lock';
-                    verb = 'locking';
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: '<?= URL_API ?>/' + ( prnt.hasClass( active_class ) ? 'un' : '' ) + endpoint + "/" + prnt.data( 'id' ),
-                    data: endpoint === 'lock' ? {password: password} : {}
-                }).done( function( data ) {
-                    console.log(data);
-                        result = parseInt( data );
-                        if( result === 1 ) {
-                            prnt.toggleClass( active_class );
-                        }
-                        else {
-                            alert( 'Error ' + verb + ' the code' );
-                        }
-                    }).fail( function( xhr ) {
-                        data = jQuery.parseJSON( xhr.responseText );
-                        if ( typeof( data.error ) !== undefined ) {
-                            alert( data.error );
-                        }
-                        else {
-                            alert( 'Error ' + verb + ' the code' );
-                        }
-                    });
-
-                return false;
-            });
-
-            $.ajaxSetup({
-                cache: true
-            });
-
-            // Language selector mode switching
-            $( "#language-selector" ).change(function(){
-                language = $(this).val();
-                if ( language == '' ) {
-                    code_editor.setOption( "mode", null );
-                    return;
-                }
-                $.ajax({
-                    type: 'GET',
-                    url: '<?= URL_API ?>/languages/full/',
-                    data: {}
-                })
-                .done( function( data ) {
-                    language_full = data[language];
-
-                    if ( language_full['mode'] == 'markdown' ) {
-                        show_markdown();
-                    }
-                    else {
-                        hide_markdown();
-                    }
-                    // Load the mode javascript
-                    $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['mode'] + '/' + language_full['mode'] + '.js', function(){});
-                    // Load the modes dependencies
-                    if ( !language_full['depends'].length ){
-                        code_editor.setOption( "mode", language_full['mime'] );
-                    }
-                    for( i=0; i< language_full['depends'].length; i++ ) {
-                        $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['depends'][i] + '/' + language_full['depends'][i] + '.js', function(){
-                            code_editor.setOption( "mode", language_full['mime'] );
-                        });
-                    }
-                }).fail( function( xhr ) {
-                    data = jQuery.parseJSON( xhr.responseText );
-                    if ( typeof( data.error ) !== undefined ) {
-                        alert( data.error );
-                    }
-                    else {
-                        alert( 'Error retrieving language data' );
-                    }
-                });
             });
 
             // Markdown preview stuff
@@ -209,6 +82,136 @@
             <?php if( isset( $code->language ) && $code->language == 'markdown' ): ?>
             show_preview();
             <?php endif; ?>
+
+            $( '.preview-container' ).scroll(function(){;
+                var length = $(this).scrollTop();
+                editor = $( this ).parent().data( 'editor' );
+                window[editor].scrollTo( 0, length );
+            });
+            
+            // Language selector mode switching
+            $( "#language-selector" ).change(function(){
+                language = $(this).val();
+                if ( language == '' ) {
+                    code_editor.setOption( "mode", null );
+                    return;
+                }
+                $.ajax({
+                    type: 'GET',
+                    url: '<?= URL_API ?>/languages/full/',
+                    data: {}
+                })
+                    .done( function( data ) {
+                        language_full = data[language];
+
+                        if ( language_full['mode'] == 'markdown' ) {
+                            show_preview();
+                        }
+                        else {
+                            hide_preview();
+                        }
+                        // Load the mode javascript
+                        $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['mode'] + '/' + language_full['mode'] + '.js', function(){});
+                        // Load the modes dependencies
+                        if ( !language_full['depends'].length ){
+                            code_editor.setOption( "mode", language_full['mime'] );
+                        }
+                        for( i=0; i< language_full['depends'].length; i++ ) {
+                            $.getScript( '<?= URL_BASE ?>/public/js/codemirror/mode/' + language_full['depends'][i] + '/' + language_full['depends'][i] + '.js', function(){
+                                code_editor.setOption( "mode", language_full['mime'] );
+                            });
+                        }
+                    }).fail( function( xhr ) {
+                        data = jQuery.parseJSON( xhr.responseText );
+                        if ( typeof( data.error ) !== undefined ) {
+                            alert( data.error );
+                        }
+                        else {
+                            alert( 'Error retrieving language data' );
+                        }
+                    });
+            });
+            <?php endif; ?>
+
+            $( '.delete-code' ).click(function(){
+                ths = $(this);
+                prnt = ths.closest( 'ul' );
+                if ( prnt.hasClass( 'locked' ) == 1 ) {
+                    alert( 'This code is locked. You can\'t delete it.' );
+                    return false;
+                }
+                if ( !confirm( "Do you want to delete code '" + prnt.data('name') + "'" ) ) {
+                    return false;
+                }
+                $.ajax({
+                    type: 'DELETE',
+                    url: '<?= URL_API ?>/delete/' + prnt.data( 'id' ),
+                    data: {}
+                }).done( function( data ) {
+                    deleted = parseInt( data );
+                    if( deleted === 1 ) {
+                        if ( ths.hasClass( 'edit' ) ) {
+                            window.location = url_base;
+                        }
+                        else {
+                            prnt.closest( 'tr' ).slideUp();
+                        }
+                    }
+                    else {
+                        alert( 'Error deleting the code' );
+                    }
+                }).fail( function( xhr ) {
+                    data = jQuery.parseJSON( xhr.responseText );
+                    if ( typeof( data.error ) !== undefined ) {
+                        alert( data.error );
+                    }
+                    else {
+                        alert( 'Error deleting the code' );
+                    }
+                });
+                return false;
+            });
+
+            $( '.star-code, .lock-code' ).click(function(){
+                ths = $(this);
+                prnt = ths.closest( 'ul' );
+                if ( ths.hasClass( 'star-code' ) ) {
+                    active_class = 'starred';
+                    endpoint = 'star';
+                    verb = 'starring';
+                }
+                else {
+                    password = <?php if( CODE_LOCK_PASSWORD != '' ): ?>prompt( 'Enter the lock password' )<?php else: ?>''<?php endif; ?>;
+                    active_class = 'locked';
+                    endpoint = 'lock';
+                    verb = 'locking';
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '<?= URL_API ?>/' + ( prnt.hasClass( active_class ) ? 'un' : '' ) + endpoint + "/" + prnt.data( 'id' ),
+                    data: endpoint === 'lock' ? {password: password} : {}
+                }).done( function( data ) {
+                    console.log(data);
+                        result = parseInt( data );
+                        if( result === 1 ) {
+                            prnt.toggleClass( active_class );
+                        }
+                        else {
+                            alert( 'Error ' + verb + ' the code' );
+                        }
+                    }).fail( function( xhr ) {
+                        data = jQuery.parseJSON( xhr.responseText );
+                        if ( typeof( data.error ) !== undefined ) {
+                            alert( data.error );
+                        }
+                        else {
+                            alert( 'Error ' + verb + ' the code' );
+                        }
+                    });
+
+                return false;
+            });
+
         </script>
         <script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
