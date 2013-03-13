@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="<?= URL_BASE ?>/public/css/codemirror.css">
         <link rel="stylesheet" href="<?= URL_BASE ?>/public/css/elegant.css">
     </head>
-    <body id="<?= $page_name ?>">
+    <body id="page-<?= $page_name ?>">
 
         <div id="header-wrapper">
             <header>
@@ -30,8 +30,6 @@
                 <ul id="navigation">
                     <li><a href="<?= URL_BASE ?>/new/"<?php if( $page_name == 'new' ): ?> class="active"<?php endif; ?>>New</a></li>
                     <li><a href="<?= URL_BASE ?>/browse/"<?php if( $page_name == 'browse' ): ?> class="active"<?php endif; ?>>Browse</a></li>
-                    <!--<li><a href="/languages/">Languages</a></li>
-                    <li><a href="/tags/">Tags</a></li>-->
                     <li><a href="<?= URL_BASE ?>/search/"<?php if( $page_name == 'search' ): ?> class="active"<?php endif; ?>>Search</a></li>
                 </ul>
             </header>
