@@ -2,14 +2,7 @@
 
 require( 'api.php' );
 
-$data = array_intersect_key(
-    array_map( 'trim', $_POST ),
-    array_flip( array( 'name', 'tags', 'code', 'language' ) )
-);
-
-if ( !$data['name'] ) {
-    $data['name'] = 'Untitled';
-}
+$data = array_map( 'trim', $_POST );
 
 if ( !preg_match( '~^\w~', $data['name'] ) ) {
     error( 400, 'Bad Request', 'Code name must start with a word character \w' );
@@ -39,7 +32,7 @@ try {
 }
 
 // No tags
-if ( !$data['tags'] ) {
+if ( empty( $data['tags'] ) ) {
     $database->commit();
     die(
         json_encode(
@@ -52,7 +45,7 @@ if ( !$data['tags'] ) {
 }
 
 // Normalize tags
-$data['tags'] = preg_split( '~\s*,\s*~', $data['tags'] );
+$data['tags'] = array_values( array_filter( preg_split( '~\s*,\s*~', $data['tags'] ) ) );
 $data['tags'] = array_map( 'string_to_url', $data['tags'] );
 
 // Insert the tags

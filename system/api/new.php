@@ -2,14 +2,7 @@
 
 require( 'api.php' );
 
-$data = array_intersect_key(
-    array_map( 'trim', $_POST ),
-    array_flip( array( 'name', 'tags', 'code', 'language' ) )
-);
-
-if ( !$data['name'] ) {
-    $data['name'] = 'Untitled';
-}
+$data = array_map( 'trim', $_POST );
 
 if ( !preg_match( '~^\w~', $data['name'] ) ) {
     error( 400, 'Bad Request', 'Code name must start with a word character \w' );
@@ -30,7 +23,7 @@ try {
 $code_id = $database->lastInsertId();
 
 // No tags
-if ( !$data['tags'] ) {
+if ( empty( $data['tags'] ) ) {
     $database->commit();
     header( 'HTTP/1.0 201 Created' );
     die(
@@ -44,8 +37,7 @@ if ( !$data['tags'] ) {
 }
 
 // Normalize tags
-// Find better way to get rid of multiple commas, array_filter wasn't working for some reason
-$data['tags'] = preg_split( '~\s*,\s*~', trim( preg_replace( '~\s*,+\s*~', ',', $data['tags'] ), ',' ) );
+$data['tags'] = array_values( array_filter( preg_split( '~\s*,\s*~', $data['tags'] ) ) );
 $data['tags'] = array_map( 'string_to_url', $data['tags'] );
 
 // Insert the tags
