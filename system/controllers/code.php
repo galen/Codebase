@@ -13,23 +13,23 @@ if ( $_POST ) {
     }
     catch( Exception $e ) {
         $error = $e->getMessage();
-        $code_data = (object)$_POST;
     }
 }
 
-
 try {
     $result = $api->get( URL_API . '/code/' . $id );
-    $code_data = $result->getData();
-    $code = (object)$code_data;
-    $code_data->tags = implode( ', ', (array)$code_data->tags );
-    $title = $code_data->name;
+    $code = $result->getData();
+    $code->tags = implode( ', ', (array)$code->tags );
+    if ( isset( $error ) ) {
+        $code = (object)array_merge( (array)$code, $_POST );
+    }
+    $code_data = $code;
+    $title = $code->name;
 }
 catch( Exception $e ) {
     $error = $e->getMessage();
     $view = '/error.php';
 }
-
 
 require( DIR_VIEWS . '/header.php' );
 require( DIR_VIEWS . $view );

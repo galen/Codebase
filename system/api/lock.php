@@ -14,5 +14,4 @@ try {
     api_error( 500, 'Server Error', 'Unknown Error' );
 }
 
-$result = $code_statement->rowCount();
-api_output( 200, 'OK', $result );
+api_output( 200, 'OK', $code_statement->rowCount() );

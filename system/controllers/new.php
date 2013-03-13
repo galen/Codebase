@@ -9,7 +9,7 @@ if ( $_POST ) {
     }
     catch( Exception $e ) {
         $error = $e->getMessage();
-        $code_data = (object)$_POST;
+        $code = (object)$_POST;
     }
 
 }

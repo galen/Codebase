@@ -100,8 +100,8 @@ h2.title { margin:0 0 12px 0;padding:0;}
 form label {display:block;font-weight:bold; font-size:16px;padding-bottom:2px;}
 .form-3column{ width: 250px;float:left; margin-bottom: 15px;}
 #code-wrapper {width:100%;clear:left;}
-#code-editor-preview-wrapper { position:relative; }
-.CodeMirror {height:500px!important; width:100%}
+#code-editor-preview-wrapper { position:relative; border:1px solid #ccc;}
+.CodeMirror {height:500px!important; width:100%;border: 0 !important;}
 .clearfix {overflow:hidden;}
 
 #code-preview { height:502px; }

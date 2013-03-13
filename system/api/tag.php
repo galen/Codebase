@@ -49,4 +49,4 @@ if ( isset( $_GET['count'] ) ) {
     $result = array( 'count' => count( $result ) );
 }
 
-api_output( $result );
+api_output( 200, 'OK', $result );
