@@ -7,6 +7,10 @@ require( 'system/vendor/autoload.php' );
 
 require( 'system/config/config.php' );
 
+if ( !is_readable( DATABASE ) || !is_writable( DATABASE ) ) {
+    die( 'You must make your database readable/writable by the webserver.' );
+}
+
 require( DIR_SYSTEM . '/lib/helpers.php' );
 
 $app = new \Slim\Slim();
