@@ -2,24 +2,25 @@
 
 A place to put code
 
-[Screenshots](https://github.com/galen/Codebase#screenshots)
+[Live Example](http://youoh.me/codebase)
 
 ##Requirements
 
- - PHP 5.4
+ - PHP 5.3+
  - SQLite with the PDO module loaded ( may switch to SQLite3 library in the future )
 
 ## Features
 
 - Lightweight
 - Data stored in an SQLite database for easy portability
-- Authentication system using HTTP authentication
+- Optional authentication system using HTTP authentication
 - Tagging system that allows for multiple tags and eventually negated tags
 - Full search capabilities using like. Full-text on the todo list.
 - Language specific Syntax highlighting
+- Preview and live editing of markdown documents
 - Full API
 - Ability to lock a piece of code with a system-wide password, code cannot be deleted until it's unlocked with the password
-- Ability to star code
+- Ability to star code (Stars currently do nothing)
 
 ##Ideas
 
@@ -32,22 +33,3 @@ A place to put code
 - Guest username/password with no editing capabilites
 - Views/Edits count for code
 - Should starting an edit lock the code
-- git integration
-
-##Screenshots
-
-###Add New Code
-![Add New Code](http://www.galengrover.com/images/codebase/new.png)
-
-###Edit
-![Edit Code](http://www.galengrover.com/images/codebase/edit.png)
-
-###Browse
-![Browse with pagination](http://www.galengrover.com/images/codebase/browse.png)
-
-###Search Code
-![Search Code](http://www.galengrover.com/images/codebase/search.png)
-
-###View Markdown
-![View Markdown](http://www.galengrover.com/images/codebase/view_markdown.png)
-
