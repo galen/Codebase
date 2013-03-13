@@ -12,7 +12,7 @@
     <tbody>
     <?php foreach( $code as $code_data ): ?>
         <tr>
-            <td><a href="<?= URL_BASE ?>/edit/<?= e( $code_data->id ) ?>/<?= e( string_to_url( $code_data->name ) ) ?>/"><?= e( $code_data->name ) ?></a></td>
+            <td class="strong"><a href="<?= URL_BASE ?>/code/<?= e( $code_data->id ) ?>/<?= e( string_to_url( $code_data->name ) ) ?>/"><?= e( $code_data->name ) ?></a></td>
             <td><?php if( $code_data->language ): ?><a href="<?= URL_BASE ?>/language/<?= e( $code_data->language ) ?>/"><?= e( $languages[$code_data->language]['name'] ) ?></a><?php else: ?><?php endif; ?></td>
             <td>
                 <ul class="tag-list">

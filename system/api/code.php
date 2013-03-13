@@ -2,10 +2,10 @@
 
 require( 'api.php' );
 
-$code_statement = $database->prepare( 'select * from code where id=:id' );
-$code_statement->bindValue( ':id', $id );
-$code_statement->execute();
 try {
+    $code_statement = $database->prepare( 'select * from code where id=:id' );
+    $code_statement->bindValue( ':id', $id );
+    $code_statement->execute();
     $code_statement->execute();
     $code_data = $code_statement->fetchAll( PDO::FETCH_ASSOC );
     if ( !count( $code_data ) ) {
@@ -13,19 +13,19 @@ try {
         exit;
     }
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unkown Error' );
+    error( 500, 'Server Error', 'Unknown Error' );
     exit;
 }
 
 $code_data[0]['tags'] = array();
 
-$tag_statement = $database->prepare( 'select tag.id, tag.tag from tag left join codeXtag on tag.id=codeXtag.tag_id where codeXtag.code_id=:id' );
-$tag_statement->bindValue( ':id', $id );
 try {
+    $tag_statement = $database->prepare( 'select tag.id, tag.tag from tag left join codeXtag on tag.id=codeXtag.tag_id where codeXtag.code_id=:id' );
+    $tag_statement->bindValue( ':id', $id );
     $tag_statement->execute();
     $tag_data = $tag_statement->fetchAll( PDO::FETCH_ASSOC );
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unkown Error' );
+    error( 500, 'Server Error', 'Unknown Error' );
     exit;
 }
 

@@ -11,16 +11,14 @@ if ( !$data['name'] ) {
     $data['name'] = 'Untitled';
 }
 
-
-$database->beginTransaction();
-
-// Insert the code
-$code_statement = $database->prepare( "update code set name=:name, code=:code, language=:language, modified=DATETIME('now') where id=:id" );
-$code_statement->bindValue( ':id', $id );
-$code_statement->bindValue( ':name', $data['name'] );
-$code_statement->bindValue( ':code', $data['code'] );
-$code_statement->bindValue( ':language', $data['language'] );
 try {
+    $database->beginTransaction();
+    // Insert the code
+    $code_statement = $database->prepare( "update code set name=:name, code=:code, language=:language, modified=DATETIME('now') where id=:id" );
+    $code_statement->bindValue( ':id', $id );
+    $code_statement->bindValue( ':name', $data['name'] );
+    $code_statement->bindValue( ':code', $data['code'] );
+    $code_statement->bindValue( ':language', $data['language'] );
     $code_statement->execute();
 } catch( PDOException $e ) {
     $database->rollback();
@@ -28,10 +26,10 @@ try {
     exit;
 }
 
-// Delete tag associations
-$tags_delete = $database->prepare( "delete from codeXtag where code_id=:id" );
-$tags_delete->bindValue( ':id', $id );
 try {
+    // Delete tag associations
+    $tags_delete = $database->prepare( "delete from codeXtag where code_id=:id" );
+    $tags_delete->bindValue( ':id', $id );
     $tags_delete->execute();
 } catch( PDOException $e ) {
     $database->rollback();
@@ -85,6 +83,7 @@ $tag_ids_statement = $database->prepare(
         )
     )
 );
+
 foreach( $data['tags'] as $tag_key => $tag ) {
     $tag_ids_statement->bindValue( ':tag' . $tag_key, $tag );
 }
@@ -96,8 +95,8 @@ try {
     error( 500, 'Server Error', 'Unknown Error' );
     exit;
 }
-$tag_ids = $tag_ids_statement->fetchAll( PDO::FETCH_COLUMN );
 
+$tag_ids = $tag_ids_statement->fetchAll( PDO::FETCH_COLUMN );
 
 $tag_x_code_statement = $database->prepare( "Insert into codeXtag (tag_id, code_id) values(:tag_id, :code_id)" );
 $tag_x_code_statement->bindValue( ':code_id', $id );

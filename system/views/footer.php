@@ -17,7 +17,7 @@
             });
             var url_base = '<?= URL_BASE ?>' ? '<?= URL_BASE ?>' : '/';
 
-            <?php if( $page_name == 'edit' || $page_name == 'new' ): ?>
+            <?php if( $page_name == 'code' || $page_name == 'new' ): ?>
 
             var showdown = new Showdown.converter();
             var code_editor = CodeMirror.fromTextArea(document.getElementById( 'code' ), {
@@ -149,7 +149,7 @@
                 }).done( function( data ) {
                     deleted = parseInt( data );
                     if( deleted === 1 ) {
-                        if ( ths.hasClass( 'edit' ) ) {
+                        if ( ths.hasClass( 'code' ) ) {
                             window.location = url_base;
                         }
                         else {

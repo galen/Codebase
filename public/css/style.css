@@ -15,51 +15,51 @@ body { font: 14px/18px "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif; 
 
 /* global foundicon styles */
 [class*="foundicon-"] {
-  display: inline;
-  width: auto;
-  height: auto;
-  line-height: inherit;
-  vertical-align: baseline;
-  background-image: none;
-  background-position: 0 0;
-  background-repeat: repeat;
+    display: inline;
+    width: auto;
+    height: auto;
+    line-height: inherit;
+    vertical-align: baseline;
+    background-image: none;
+    background-position: 0 0;
+    background-repeat: repeat;
 }
 
 [class*="foundicon-"]:before {
-  font-family: "GeneralFoundicons";
-  font-weight: normal;
-  font-style: normal;
-  text-decoration: inherit;
+    font-family: "GeneralFoundicons";
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
 }
 
 /* icons */
 .foundicon-lock:before {
-  content: "\f01b";
+    content: "\f01b";
 }
 
 .foundicon-unlock:before {
-  content: "\f01c";
+    content: "\f01c";
 }
 .foundicon-star:before {
-  content: "\f002";
+    content: "\f002";
 }
 .foundicon-trash:before {
-  content: "\f018";
+    content: "\f018";
 }
 .foundicon-up-arrow:before {
-  content: "\f016";
+    content: "\f016";
 }
 
 .foundicon-down-arrow:before {
-  content: "\f017";
+    content: "\f017";
 }
 
 .foundicon-add-doc:before {
-  content: "\f019";
+    content: "\f019";
 }
 
 .foundicon-edit:before {
-  content: "\f01a";
+    content: "\f01a";
 }
 
 a, a:active, a:visited { color: #aa0000;text-decoration:none; }
@@ -128,14 +128,14 @@ header a:hover{text-decoration:none;}
 
 input[type="text"],
 select{
-  padding: 3px;
+    padding: 3px;
     width: 80%;
 }
 select {
-  width: 85%;
+    width: 85%;
 }
 input[type="submit"] {
-margin-top: 5px;
+    margin-top: 5px;
 }
 
 #search-wrapper { width: 800px; overflow:hidden; }
@@ -178,5 +178,5 @@ margin-top: 5px;
 .code-list td:first-child{border-left: 1px solid #ccc;}
 .code-list td:last-child{border-right: 1px solid #ccc;}
 .code-list .centered {text-align:center;}
-
+.code-list .strong { font-weight:bold; }
 .code-count { font-size: 16px; color: #888 }

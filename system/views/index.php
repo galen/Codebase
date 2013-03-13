@@ -1,6 +1,6 @@
 <?php if( $current_page > $total_pages ): ?>
     <p>This page does not exist</p>
 <?php else: ?>
-<h2 class="title">Newly Modified Code <span class="code-count">(<?= $code_count ?>)</span></h2>
+<h2 class="title">Newly modified code <span class="code-count">(<?= $code_count ?>)</span></h2>
 <?php require( DIR_VIEWS . '/list.php' ) ?>
 <?php endif; ?>

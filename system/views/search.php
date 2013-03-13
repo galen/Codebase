@@ -1,9 +1,9 @@
-<h2 class="title">Search Code</h2>
+<h2 class="title">Search code</h2>
 
 <div id="search-wrapper">
 
 <div class="search-form">
-    <h3>Search Code Names <span class="code-count">(<?= $code_count ?>)</span></h3>
+    <h3>Search code names <span class="code-count">(<?= $code_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>
@@ -19,7 +19,7 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Code <span class="code-count">(<?= $code_count ?>)</span></h3>
+    <h3>Search code <span class="code-count">(<?= $code_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>
@@ -35,11 +35,11 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Tags <span class="code-count">(<?= $tags_count ?>)</span></h3>
+    <h3>Search tags <span class="code-count">(<?= $tags_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>
-                <label for="">Select Tag</label>
+                <label for="">Select tag</label>
                 <select name="tag">
                     <option value=""></option>
                 <?php foreach( $tags as $tag ): ?>
@@ -57,7 +57,7 @@
     <form action="" method="get" class="secondary-search">
         <fieldset>
             <div>
-                <label for="">Enter Tags <span class="instructions">Separate tags with commas</span></label>
+                <label for="">Enter tags <span class="instructions">Separate tags with commas</span></label>
                 <input type="text" name="q">
             </div>
             <div>
@@ -69,11 +69,11 @@
 </div>
 
 <div class="search-form">
-    <h3>Search Languages <span class="code-count">(<?= $langs_count ?>)</span></h3>
+    <h3>Search languages <span class="code-count">(<?= $langs_count ?>)</span></h3>
     <form action="" method="get">
         <fieldset>
             <div>
-                <label for="">Select Language</label>
+                <label for="">Select language</label>
                 <select name="language">
                     <option value=""></option>
                 <?php foreach( $langs as $lang ): ?>

@@ -68,9 +68,9 @@ $app->get('/search/', function() use( $app, $api, $languages ) {
     require( DIR_CONTROLLERS . '/search.php' );
 });
 
-$app->map( '/edit/:id/(:name/)', function( $id, $name = null ) use( $app, $api, $languages ){
-    $page_name = 'edit';
-    require( DIR_CONTROLLERS . '/edit.php' );
+$app->map( '/code/:id/(:name/)', function( $id, $name = null ) use( $app, $api, $languages ){
+    $page_name = 'code';
+    require(DIR_CONTROLLERS . '/code.php');
 })->via( 'GET', 'POST' );
 
 /*
