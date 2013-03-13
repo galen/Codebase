@@ -33,7 +33,7 @@ if ( empty( $data['tags'] ) ) {
     );
 }
 
-$data['tags'] = normalize_tags( $dat['tags'] );
+$data['tags'] = normalize_tags( $data['tags'] );
 
 // Insert the tags
 $tag_statement = $database->prepare( "Insert into tag (id, tag) values(null, :tag)" );
