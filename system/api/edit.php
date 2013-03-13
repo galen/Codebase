@@ -4,9 +4,7 @@ require( 'api.php' );
 
 $data = array_map( 'trim', $_POST );
 
-if ( !preg_match( '~^\w~', $data['name'] ) ) {
-    error( 400, 'Bad Request', 'Code name must start with a word character \w' );
-}
+validate_code( $data );
 
 try {
     $database->beginTransaction();
@@ -18,7 +16,7 @@ try {
     $code_statement->execute();
 } catch( PDOException $e ) {
     $database->rollback();
-    error( 500, 'Server Error' );
+    api_error( 500, 'Server Error' );
 }
 
 try {
@@ -28,25 +26,23 @@ try {
     $tags_delete->execute();
 } catch( PDOException $e ) {
     $database->rollback();
-    error( 500, 'Server Error' );
+    api_error( 500, 'Server Error' );
 }
 
 // No tags
 if ( empty( $data['tags'] ) ) {
     $database->commit();
-    die(
-        json_encode(
-            array(
-                'name'      => $data['name'],
-                'id'        => $id
-            )
+    api_output(
+        200,
+        'OK',
+        array(
+            'name'      => $data['name'],
+            'id'        => $id
         )
     );
 }
 
-// Normalize tags
-$data['tags'] = array_values( array_filter( preg_split( '~\s*,\s*~', $data['tags'] ) ) );
-$data['tags'] = array_map( 'string_to_url', $data['tags'] );
+$data['tags'] = normalize_tags( $dat['tags'] );
 
 // Insert the tags
 $tag_statement = $database->prepare( "Insert into tag (id, tag) values(null, :tag)" );
@@ -59,8 +55,7 @@ foreach( $data['tags'] as $tag) {
             continue;
         }
         $database->rollback();
-        error( 500, 'Server Error', 'Unknown Error' );
-        exit;
+        api_error( 500, 'Server Error', 'Unknown Error' );
     }
 }
 
@@ -86,8 +81,7 @@ try {
     $tag_ids_statement->execute();
 } catch( PDOException $e ) {
     $database->rollback();
-    error( 500, 'Server Error', 'Unknown Error' );
-    exit;
+    api_error( 500, 'Server Error', 'Unknown Error' );
 }
 
 $tag_ids = $tag_ids_statement->fetchAll( PDO::FETCH_COLUMN );
@@ -100,18 +94,17 @@ foreach( $tag_ids as $tag_id ) {
         $tag_x_code_statement->execute();
     } catch( PDOException $e ) {
         $database->rollback();
-        error( 500, 'Server Error', 'Unknown Error' );
-        exit;
+        api_error( 500, 'Server Error', 'Unknown Error' );
     }
 }
 
 $database->commit();
-
-die(
-    json_encode(
-        array(
-            'name'      => $data['name'],
-            'id'        => $id
-        )
+api_output(
+    200,
+    'OK',
+    array(
+        'name'      => $data['name'],
+        'id'        => $id
     )
 );
+

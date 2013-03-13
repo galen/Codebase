@@ -2,4 +2,4 @@
 
 require( 'api.php' );
 
-die( json_encode( $languages ) );
+api_output( 200, 'OK', $languages );

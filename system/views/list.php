@@ -16,7 +16,7 @@
             <td><?php if( $code_data->language ): ?><a href="<?= URL_BASE ?>/language/<?= e( $code_data->language ) ?>/"><?= e( $languages[$code_data->language]['name'] ) ?></a><?php else: ?><?php endif; ?></td>
             <td>
                 <ul class="tag-list">
-                <?php foreach( $code_data->tags as $tag ): ?>
+                <?php foreach( explode( ',', $code_data->tags ) as $tag ): ?>
                     <li><a href="<?= URL_BASE ?>/tag/<?= e( $tag ) ?>/"><?= e( $tag ) ?></a></li>
                 <?php endforeach; ?>
                 </ul>

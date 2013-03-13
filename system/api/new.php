@@ -4,9 +4,7 @@ require( 'api.php' );
 
 $data = array_map( 'trim', $_POST );
 
-if ( !preg_match( '~^\w~', $data['name'] ) ) {
-    error( 400, 'Bad Request', 'Code name must start with a word character \w' );
-}
+validate_code( $data );
 
 try {
     $database->beginTransaction();
@@ -15,30 +13,27 @@ try {
     $code_statement->bindValue( ':code', $data['code'] );
     $code_statement->bindValue( ':language', $data['language'] ? $data['language'] : null );
     $code_statement->execute();
-} catch( PDOException $e ) {
+}
+catch( PDOException $e ) {
     $database->rollback();
-    error( 500, 'Server Error' );
-    exit;
+    api_error( 500, 'Server Error' );
 }
 $code_id = $database->lastInsertId();
 
 // No tags
 if ( empty( $data['tags'] ) ) {
     $database->commit();
-    header( 'HTTP/1.0 201 Created' );
-    die(
-        json_encode(
-            array(
-                'name'      => $data['name'],
-                'id'        => $code_id
-            )
+    api_output(
+        201,
+        'Created',
+        array(
+            'name'      => $data['name'],
+            'id'        => $code_id
         )
     );
 }
 
-// Normalize tags
-$data['tags'] = array_values( array_filter( preg_split( '~\s*,\s*~', $data['tags'] ) ) );
-$data['tags'] = array_map( 'string_to_url', $data['tags'] );
+$data['tags'] = normalize_tags( $dat['tags'] );
 
 // Insert the tags
 $tag_statement = $database->prepare( "Insert into tag (id, tag) values(null, :tag)" );
@@ -51,8 +46,7 @@ foreach( $data['tags'] as $tag) {
             continue;
         }
         $database->rollback();
-        error( 500, 'Server Error' );
-        exit;
+        api_error( 500, 'Server Error' );
     }
 }
 
@@ -77,8 +71,7 @@ try {
     $tag_ids_statement->execute();
 } catch( PDOException $e ) {
     $database->rollback();
-    error( 500, 'Server Error' );
-    exit;
+    api_error( 500, 'Server Error' );
 }
 $tag_ids = $tag_ids_statement->fetchAll( PDO::FETCH_COLUMN );
 
@@ -91,19 +84,17 @@ foreach( $tag_ids as $tag_id ) {
         $tag_x_code_statement->execute();
     } catch( PDOException $e ) {
         $database->rollback();
-        error( 500, 'Server Error' );
-        exit;
+        api_error( 500, 'Server Error' );
     }
 }
 
 $database->commit();
 
-header( 'HTTP/1.0 201 Created' );
-die(
-    json_encode(
-        array(
-            'name'      => $data['name'],
-            'id'        => $code_id
-        )
+api_output(
+    201,
+    'Created',
+    array(
+       'name'      => $data['name'],
+       'id'        => $code_id
     )
 );

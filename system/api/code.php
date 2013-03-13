@@ -9,15 +9,11 @@ try {
     $code_statement->execute();
     $code_data = $code_statement->fetchAll( PDO::FETCH_ASSOC );
     if ( !count( $code_data ) ) {
-        error( 404, 'Not Found', 'Invalid Code ID' );
-        exit;
+        api_error( 404, 'Not Found', 'Invalid Code ID' );
     }
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unknown Error' );
-    exit;
+    api_error( 500, 'Server Error', 'Unknown Error' );
 }
-
-$code_data[0]['tags'] = array();
 
 try {
     $tag_statement = $database->prepare( 'select tag.id, tag.tag from tag left join codeXtag on tag.id=codeXtag.tag_id where codeXtag.code_id=:id' );
@@ -25,14 +21,14 @@ try {
     $tag_statement->execute();
     $tag_data = $tag_statement->fetchAll( PDO::FETCH_ASSOC );
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unknown Error' );
-    exit;
-}
-
-foreach( $tag_data as $tag ) {
-    $code_data[0]['tags'][$tag['id']] = $tag['tag'];
+    api_error( 500, 'Server Error', 'Unknown Error' );
 }
 
 $code = $code_data[0];
+$code['tags'] = array();
+foreach( $tag_data as $tag ) {
+    $code['tags'][$tag['id']] = $tag['tag'];
+}
 
-die( json_encode( $code ) );
+api_output( 200, 'OK', $code );
+

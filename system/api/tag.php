@@ -1,22 +1,28 @@
 <?php
-//SELECT id from tag where tag in ('php','this')
+
 require( 'api.php' );
-
-/*
-
-*/
 
 $tags = explode( ' ', $tags );
 
 $code_statement = $database->prepare(
     sprintf(
-        "SELECT b.*, (select group_concat(tag.tag) from tag left outer join codeXtag on tag.id=codeXtag.tag_id where codeXtag.code_id = b.id) as tags
-FROM codeXtag bt, code b, tag t
-WHERE bt.tag_id = t.id
-AND (t.tag IN (%s))
-AND b.id = bt.code_id
-GROUP BY b.id
-HAVING COUNT( b.id )=%s" . get_pagination_sql( $_GET ),
+        'SELECT
+            b.*,
+            (select group_concat(tag.tag) from tag left outer join codeXtag on tag.id=codeXtag.tag_id where codeXtag.code_id = b.id) as tags
+        FROM
+            codeXtag bt,
+            code b,
+            tag t
+        WHERE
+            bt.tag_id = t.id
+        AND
+            (t.tag IN (%s))
+        AND
+            b.id = bt.code_id
+        GROUP BY
+            b.id
+        HAVING
+            COUNT( b.id )=%s' . get_pagination_sql( $_GET ),
         implode(
             ',',
             array_map(
@@ -34,8 +40,7 @@ foreach( $tags as $tag_key => $tag ) {
 try {
     $code_statement->execute();
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unknown Error' );
-    exit;
+    api_error( 500, 'Server Error', 'Unknown Error' );
 }
 
 $result = $code_statement->fetchAll( PDO::FETCH_ASSOC );
@@ -43,8 +48,5 @@ $result = $code_statement->fetchAll( PDO::FETCH_ASSOC );
 if ( isset( $_GET['count'] ) ) {
     $result = array( 'count' => count( $result ) );
 }
-else {
-    code_tags_to_array( $result );
-}
 
-die( json_encode( $result ) );
+api_output( $result );

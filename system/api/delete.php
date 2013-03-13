@@ -6,28 +6,22 @@ try {
     $result = $api->get( URL_API . '/code/' . $id );
     $locked = $result->getData()->lock;
     if ( $locked ) {
-        error( 409, 'Conflict', 'Code Locked' );
-        exit;
+        api_error( 403, 'Forbidden', 'Code Locked' );
     }
 }
 catch( Exception $e ) {
-    error( 500, 'Server Error', $e->getMessage() );
-    exit;
+    api_error( 500, 'Server Error', $e->getMessage() );
 }
 
-$code_statement = $database->prepare( 'delete from code where code.id=:id' );
-$tag_statement = $database->prepare( 'delete from codeXtag where codeXtag.code_id=:id' );
-$code_statement->bindValue( ':id', $id );
-$tag_statement->bindValue( ':id', $id );
-
 try {
+    $code_statement = $database->prepare( 'delete from code where code.id=:id' );
+    $tag_statement = $database->prepare( 'delete from codeXtag where codeXtag.code_id=:id' );
+    $code_statement->bindValue( ':id', $id );
+    $tag_statement->bindValue( ':id', $id );
     $code_statement->execute();
     $tag_statement->execute();
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unknown Error' );
-    exit;
+    api_error( 500, 'Server Error', 'Unknown Error' );
 }
 
-$result = $code_statement->rowCount();
-
-die( json_encode( $result ) );
+api_output( 200, 'OK', $code_statement->rowCount() );

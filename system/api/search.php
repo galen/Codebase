@@ -2,10 +2,9 @@
 
 require( 'api.php' );
 
-
-
-$search_statement = $database->prepare(
-    sprintf( '
+try {
+    $search_statement = $database->prepare(
+        sprintf( '
         select
             code.id,
             code.name,
@@ -23,26 +22,21 @@ $search_statement = $database->prepare(
         like
             :query
         %s
-    ',
-        $_GET['t'],
-        get_pagination_sql( $_GET )
-    )
-);
+      ',
+            $_GET['t'],
+            get_pagination_sql( $_GET )
+        )
+    );
 
-$search_statement->bindValue( ':query', '%'.$_GET['q'].'%' );
-try {
+    $search_statement->bindValue( ':query', '%'.$_GET['q'].'%' );
     $search_statement->execute();
     $result = $search_statement->fetchAll( PDO::FETCH_ASSOC );
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unknown Error' );
-    exit;
+    api_error( 500, 'Server Error', 'Unknown Error' );
 }
 
 if ( isset( $_GET['count'] ) ) {
     $result = array( 'count' => count( $result ) );
 }
-else {
-    code_tags_to_array( $result );
-}
 
-die( json_encode( $result ) );
+api_output( 200, 'OK', $result );

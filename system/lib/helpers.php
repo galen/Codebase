@@ -4,6 +4,16 @@ function string_to_url( $string ) {
     return trim( preg_replace( array( '~[^a-z^\-^\s^\d]~', '~\s+~' ), array( '', '-' ), strtolower( $string ) ), '-' );
 }
 
+function normalize_tags( $tags ) {
+    return array_map( 'string_to_url', array_values( array_filter( preg_split( '~\s*,\s*~', $tags ) ) ) );
+}
+
+function validate_code( array $code ) {
+    if ( !preg_match( '~^\w~', $code['name'] ) ) {
+        api_error( 400, 'Bad Request', 'Code name must start with a word character \w' );
+    }
+}
+
 function e( $string ) {
     return htmlspecialchars( $string );
 }
@@ -13,12 +23,6 @@ function tstamp_long( $datetime ) {
 }
 function tstamp_short( $datetime ) {
     return date( 'n/j/y@Hi', strtotime( $datetime ) );
-}
-
-function code_tags_to_array( &$code ) {
-    foreach( $code as &$c ) {
-        $c['tags'] = explode( ',', $c['tags'] );
-    }
 }
 
 function parse_list_data( $get, $default_order = null ) {

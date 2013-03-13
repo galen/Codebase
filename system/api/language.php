@@ -2,8 +2,8 @@
 
 require( 'api.php' );
 
-$code_statement = $database->prepare( '
-    select
+$code_statement = $database->prepare(
+    'select
         code.id,
         code.name,
         code.code,
@@ -16,15 +16,15 @@ $code_statement = $database->prepare( '
     from
         code
     where
-        language=:language
-' . get_pagination_sql( $_GET ) );
+        language=:language'
+    . get_pagination_sql( $_GET )
+);
 
 $code_statement->bindValue( ':language', $language );
 try {
     $code_statement->execute();
 } catch( PDOException $e ) {
-    error( 500, 'Server Error', 'Unknown Error' );
-    exit;
+    api_error( 500, 'Server Error', 'Unknown Error' );
 }
 
 $result = $code_statement->fetchAll( PDO::FETCH_ASSOC );
@@ -32,8 +32,5 @@ $result = $code_statement->fetchAll( PDO::FETCH_ASSOC );
 if ( isset( $_GET['count'] ) ) {
     $result = array( 'count' => count( $result ) );
 }
-else {
-    code_tags_to_array( $result );
-}
 
-die( json_encode( $result ) );
+api_output( 200, 'OK', $result );

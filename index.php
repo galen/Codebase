@@ -69,17 +69,10 @@ $app->get('/search/', function() use( $app, $api, $languages ) {
     require( DIR_CONTROLLERS . '/search.php' );
 });
 
-$app->map( '/code/:id/(:name/)', function( $id, $name = null ) use( $app, $api, $languages ){
+$app->map( '/code/:id/(:stub/)', function( $id, $stub = null ) use( $app, $api, $languages ){
     $page_name = 'code';
     require(DIR_CONTROLLERS . '/code.php');
 })->via( 'GET', 'POST' );
-
-/*
-$app->get( '/code/:id/(:name/)', function( $id, $name = null ) use( $app, $api, $languages ){
-    $page_name = 'code';
-    require( DIR_CONTROLLERS . '/code.php' );
-});
-*/
 
 
 // API calls
