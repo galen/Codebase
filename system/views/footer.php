@@ -149,7 +149,7 @@
                 }).done( function( data ) {
                     deleted = parseInt( data );
                     if( deleted === 1 ) {
-                        if ( ths.hasClass( 'code' ) ) {
+                        if ( prnt.hasClass( 'code-page' ) ) {
                             window.location = url_base;
                         }
                         else {

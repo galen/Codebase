@@ -31,7 +31,7 @@
         </div>
         <div>
             <input type="hidden" name="name_old" value="<?php if( isset( $code_data ) ): ?><?= e( $code_data->name ) ?><?php endif; ?>">
-            <input type="submit" value=" <?php if( $page_name == 'edit' ): ?>Save<?php else: ?>Create<?php endif; ?> " name="submit">
+            <input type="submit" value=" <?php if( $page_name == 'code' ): ?>Save<?php else: ?>Create<?php endif; ?> " name="submit">
         </div>
     </fieldset>
 </form>

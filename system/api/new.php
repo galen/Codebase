@@ -11,17 +11,18 @@ if ( !$data['name'] ) {
     $data['name'] = 'Untitled';
 }
 
-$database->beginTransaction();
+if ( !preg_match( '~^\w~', $data['name'] ) ) {
+    error( 400, 'Bad Request', 'Code name must start with a word character \w' );
+}
 
-// Insert the code
-$code_statement = $database->prepare( "Insert into code (id, name, code, language, created, modified) values(null, :name, :code, :language, DATETIME('now'), DATETIME('now'));" );
-$code_statement->bindValue( ':name', $data['name'] );
-$code_statement->bindValue( ':code', $data['code'] );
-$code_statement->bindValue( ':language', $data['language'] ? $data['language'] : null );
 try {
+    $database->beginTransaction();
+    $code_statement = $database->prepare( "Insert into code (id, name, code, language, created, modified) values(null, :name, :code, :language, DATETIME('now'), DATETIME('now'));" );
+    $code_statement->bindValue( ':name', $data['name'] );
+    $code_statement->bindValue( ':code', $data['code'] );
+    $code_statement->bindValue( ':language', $data['language'] ? $data['language'] : null );
     $code_statement->execute();
 } catch( PDOException $e ) {
-print_r($e);
     $database->rollback();
     error( 500, 'Server Error' );
     exit;
@@ -43,7 +44,8 @@ if ( !$data['tags'] ) {
 }
 
 // Normalize tags
-$data['tags'] = preg_split( '~\s*,\s*~', $data['tags'] );
+// Find better way to get rid of multiple commas, array_filter wasn't working for some reason
+$data['tags'] = preg_split( '~\s*,\s*~', trim( preg_replace( '~\s*,+\s*~', ',', $data['tags'] ), ',' ) );
 $data['tags'] = array_map( 'string_to_url', $data['tags'] );
 
 // Insert the tags

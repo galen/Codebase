@@ -14,4 +14,5 @@ function error( $code, $status, $message = null ) {
             )
         );
     }
+    exit;
 }

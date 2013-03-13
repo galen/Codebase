@@ -11,9 +11,12 @@ if ( !$data['name'] ) {
     $data['name'] = 'Untitled';
 }
 
+if ( !preg_match( '~^\w~', $data['name'] ) ) {
+    error( 400, 'Bad Request', 'Code name must start with a word character \w' );
+}
+
 try {
     $database->beginTransaction();
-    // Insert the code
     $code_statement = $database->prepare( "update code set name=:name, code=:code, language=:language, modified=DATETIME('now') where id=:id" );
     $code_statement->bindValue( ':id', $id );
     $code_statement->bindValue( ':name', $data['name'] );
@@ -23,7 +26,6 @@ try {
 } catch( PDOException $e ) {
     $database->rollback();
     error( 500, 'Server Error' );
-    exit;
 }
 
 try {
@@ -34,7 +36,6 @@ try {
 } catch( PDOException $e ) {
     $database->rollback();
     error( 500, 'Server Error' );
-    exit;
 }
 
 // No tags

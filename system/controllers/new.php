@@ -1,7 +1,5 @@
 <?php
 
-$view = '/new.php';
-
 if ( $_POST ) {
 
     try {
@@ -11,11 +9,11 @@ if ( $_POST ) {
     }
     catch( Exception $e ) {
         $error = $e->getMessage();
-        $view = '/error.php';
+        $code_data = (object)$_POST;
     }
 
 }
 
 require( DIR_VIEWS . '/header.php' );
-require( DIR_VIEWS . $view );
+require( DIR_VIEWS . '/new.php' );
 require( DIR_VIEWS . '/footer.php' );

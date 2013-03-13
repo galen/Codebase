@@ -14,6 +14,7 @@ $app = new \Slim\Slim();
 // Every page consumes the API
 require( DIR_SYSTEM . '/lib/Curl.php' );
 require( DIR_SYSTEM . '/lib/Api.php' );
+require( DIR_SYSTEM . '/lib/ApiResult.php' );
 
 $curl = new Curl;
 
