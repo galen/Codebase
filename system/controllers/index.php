@@ -25,6 +25,7 @@ catch( Exception $e ) {
     $view = '/error.php';
 }
 
+$title = 'A Place For Code';
 require( DIR_VIEWS . '/header.php' );
 require( DIR_VIEWS . $view );
 require( DIR_VIEWS . '/footer.php' );

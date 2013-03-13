@@ -38,7 +38,7 @@ try {
             $current_page = isset( $get_data['page'] ) ? $get_data['page'] : 1;
             $total_pages = ceil( $search_code_count / CODES_PER_PAGE );
             $pagination = get_pagination( $current_page, $total_pages, PAGINATION_VIEWPORT );
-
+            $title = sprintf( 'Search Results: "%s"', $get_data['q'] );
             $view = '/search_results.php';
         }
         else {
@@ -48,6 +48,7 @@ try {
             $langs_count = array_reduce( $langs, function( $c, $l ) { return $c += $l->count; }, 0 );
             $tags = $tags_result->getData();
             $tags_count = count( $tags );
+            $title = 'Search';
             $view = '/search.php';
         }
     }

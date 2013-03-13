@@ -14,6 +14,7 @@ if ( $_POST ) {
 
 }
 
+$title = 'New';
 require( DIR_VIEWS . '/header.php' );
 require( DIR_VIEWS . '/new.php' );
 require( DIR_VIEWS . '/footer.php' );

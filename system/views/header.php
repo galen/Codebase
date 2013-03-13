@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Codebase</title>
+        <title>Codebase<?php if( isset( $title ) ): ?> - <?= $title ?><?php endif; ?></title>
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="<?= URL_BASE ?>/public/css/normalize.min.css" />
         <script src="<?= URL_BASE ?>/public/js/vendor/custom.modernizr.js"></script>

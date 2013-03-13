@@ -23,6 +23,7 @@ try {
     $code_data = $result->getData();
     $code = (object)$code_data;
     $code_data->tags = implode( ', ', (array)$code_data->tags );
+    $title = $code_data->name;
 }
 catch( Exception $e ) {
     $error = $e->getMessage();
