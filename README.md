@@ -9,7 +9,16 @@ A place to put code
  - PHP 5.3+
  - SQLite with the PDO module loaded ( may switch to SQLite3 library in the future )
 
-## Features
+##Installation
+
+ - git clone git@github.com:galen/Codebase.git
+ - cd Codebase
+ - composer install
+ - mv system/config/config_sample.php system/config/config.php
+
+Then just make sure your webserver has read/write access to the SQLite database.
+
+##Features
 
 - Lightweight
 - Data stored in an SQLite database for easy portability
