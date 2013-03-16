@@ -2,7 +2,7 @@
 
 A place to put code
 
-[Live Example](http://youoh.me/codebase)
+[Live Example](http://youoh.me/codebase) (username=codebase, password=codebase)
 
 ##Requirements
 
