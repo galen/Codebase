@@ -2,8 +2,6 @@
 
 A place to put code
 
-[Live Example](http://youoh.me/codebase) (username=codebase, password=codebase)
-
 ##Requirements
 
  - PHP 5.3+
